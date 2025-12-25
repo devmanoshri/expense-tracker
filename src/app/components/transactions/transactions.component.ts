@@ -1,66 +1,94 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../../services/transaction.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
+import { TransactionService } from '../../services/transaction.service';
 import { CategoriesService } from '../../services/categories.service';
-import { Category } from '../../models/category.model';
-//import { ExpenseChartComponent } from "../expense-chart/expense-chart.component";
+
 import { Transaction } from '../../models/transaction.model';
+import { Category } from '../../models/category.model';
+import { ExpenseChartComponent } from "../expense-chart/expense-chart.component";
 
 @Component({
   selector: 'app-transactions',
-  templateUrl: './transactions.component.html',
-  imports: [FormsModule, CommonModule, RouterLink],
-  standalone: true
+  standalone: true,
+  imports: [FormsModule, CommonModule, RouterLink, ExpenseChartComponent],
+  templateUrl: './transactions.component.html'
 })
-
 export class TransactionsComponent implements OnInit {
 
   transactions: Transaction[] = [];
   categories: Category[] = [];
+
   selectedCategoryId: string | null = null;
+  fromDate: string = '';
+  toDate: string = '';
+
+  editTransactionId: string | null = null;
 
   newTransaction: Transaction = {
     title: '',
     amount: 0,
-    categoryId: '',
-    date: '',
-    type: 'income'
+    type: 'income',
+    categoryId: undefined,
+    date: ''
   };
 
-  editTransactionId: string | null = null;
-
-  constructor(private transactionService: TransactionService, private categoryService: CategoriesService) { }
+  constructor(
+    private transactionService: TransactionService,
+    private categoryService: CategoriesService
+  ) {}
 
   ngOnInit(): void {
-    this.loadTransaction();
+    this.loadTransactions();
     this.loadCategories();
   }
 
-  loadTransaction() {
-    this.transactionService.getTransactions()
-      .subscribe(transaction => this.transactions = transaction);
+  loadTransactions(): void {
+    this.transactionService
+      .getTransactions()
+      .subscribe(data => this.transactions = data);
   }
 
-  loadCategories() {
-    this.categoryService.getCategories().subscribe(category => this.categories = category)
+  loadCategories(): void {
+    this.categoryService
+      .getCategories()
+      .subscribe(data => this.categories = data);
   }
 
-  getFilteredTransactions(): Transaction[] {
-    if (!this.selectedCategoryId) return this.transactions;
-    return this.transactions.filter((transaction) => transaction.categoryId === this.selectedCategoryId);
+  /* ================= FILTERING ================= */
+
+  get filteredTransactions(): Transaction[] {
+    return this.transactions.filter(t => {
+
+      // category filter (expense only)
+      if (
+        this.selectedCategoryId &&
+        t.type === 'expense' &&
+        t.categoryId !== this.selectedCategoryId
+      ) {
+        return false;
+      }
+
+      const txDate = new Date(t.date).getTime();
+      const from = this.fromDate ? new Date(this.fromDate).getTime() : null;
+      const to = this.toDate ? new Date(this.toDate).getTime() : null;
+
+      if (from && txDate < from) return false;
+      if (to && txDate > to) return false;
+
+      return true;
+    });
   }
 
-  getCategoryName(catId: string): string {
-    return this.categoryService.getCategoryName(catId);
-  }
+  /* ================= CRUD ================= */
 
   addTransaction(): void {
     this.transactionService.addTransaction(this.newTransaction)
       .subscribe(() => {
-        this.loadTransaction();
-        this.newTransaction = { title: '', amount: 0, categoryId: '', date: '', type: 'expense' };
+        this.loadTransactions();
+        this.resetForm();
       });
   }
 
@@ -72,15 +100,15 @@ export class TransactionsComponent implements OnInit {
   updateTransaction(): void {
     this.transactionService.updateTransaction(this.newTransaction)
       .subscribe(() => {
-        this.loadTransaction();
-        this.editTransactionId = null;
+        this.loadTransactions();
         this.resetForm();
+        this.editTransactionId = null;
       });
   }
 
   deleteTransaction(id: string): void {
     this.transactionService.deleteTransaction(id)
-      .subscribe(() => this.loadTransaction());
+      .subscribe(() => this.loadTransactions());
   }
 
   cancelEdit(): void {
@@ -92,15 +120,33 @@ export class TransactionsComponent implements OnInit {
     this.newTransaction = {
       title: '',
       amount: 0,
-      categoryId: '',
-      date: '',
-      type: 'expense'
+      type: 'income',
+      categoryId: undefined,
+      date: ''
     };
   }
 
-  getTotalTransaction(): number {
-    return this.getFilteredTransactions().reduce((sum, transactionItem) => sum + transactionItem.amount, 0);
+  /* ================= HELPERS ================= */
+
+  getCategoryName(categoryId?: string): string {
+    return this.categories.find(c => c.id === categoryId)?.name || '';
+  }
+
+  /* ================= TOTALS ================= */
+
+  get totalIncome(): number {
+    return this.filteredTransactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }
+
+  get totalExpense(): number {
+    return this.filteredTransactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+  }
+
+  get balance(): number {
+    return this.totalIncome - this.totalExpense;
   }
 }
-
-

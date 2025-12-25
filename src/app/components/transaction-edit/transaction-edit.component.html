@@ -1,11 +1,42 @@
-<h2>Edit Expense</h2>
+<h2>Edit Transaction</h2>
 
 <form *ngIf="transaction" (ngSubmit)="updateTransaction()">
 
-  <input type="text" [(ngModel)]="transaction.title" name="title" required />
-  <input type="number" [(ngModel)]="transaction.amount" name="amount" required />
-  <input type="number" [(ngModel)]="transaction.categoryId" name="category" required />
-  <input type="date" [(ngModel)]="transaction.date" name="date" required />
+  <!-- TYPE -->
+  <label>
+    <input type="radio" value="income" [(ngModel)]="transaction.type" name="type">
+    Income
+  </label>
 
+  <label>
+    <input type="radio" value="expense" [(ngModel)]="transaction.type" name="type">
+    Expense
+  </label>
+
+  <br><br>
+
+  <!-- TITLE -->
+  <input type="text" [(ngModel)]="transaction.title" name="title" placeholder="Title" required>
+
+  <!-- AMOUNT -->
+  <input type="number" [(ngModel)]="transaction.amount" name="amount" placeholder="Amount" required>
+
+  <!-- CATEGORY (ONLY FOR EXPENSE) -->
+  <select *ngIf="transaction.type === 'expense'" [(ngModel)]="transaction.categoryId" name="categoryId" required>
+    <option [ngValue]="null">Select Category</option>
+    <option *ngFor="let category of categories" [ngValue]="category.id.toString()">
+      {{ category.name }}
+    </option>
+  </select>
+
+  <br><br>
+
+  <!-- DATE -->
+  <input type="date" [(ngModel)]="transaction.date" name="date" required>
+
+  <br><br>
+
+  <!-- ACTIONS -->
   <button type="submit">Update</button>
+  <button type="button" (click)="cancel()">Cancel</button>
 </form>

@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "Groceries",
-      "amount": 1800,
+      "amount": 1900,
       "type": "expense",
       "categoryId": "2",
       "date": "2025-01-10"
@@ -34,7 +34,7 @@
     },
     {
       "id": "5",
-      "title": "sosage",
+      "title": "Sosage",
       "amount": 60,
       "type": "expense",
       "categoryId": "1",
@@ -79,6 +79,21 @@
       "categoryId": "1",
       "date": "2025-12-24",
       "type": "income"
+    },
+    {
+      "id": "e844",
+      "title": "cake",
+      "amount": 299,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-12-25"
+    },
+    {
+      "id": "d2d0",
+      "title": "gift card amount",
+      "amount": 300,
+      "type": "income",
+      "date": "2025-12-25"
     }
   ],
   "expenseCategories": [

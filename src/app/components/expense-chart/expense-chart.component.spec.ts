@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ExpenseChartComponent } from './expense-chart.component';
 
 describe('ExpenseChartComponent', () => {
@@ -9,11 +8,12 @@ describe('ExpenseChartComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ExpenseChartComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExpenseChartComponent);
     component = fixture.componentInstance;
+
+    component.transactions = [];
     fixture.detectChanges();
   });
 

@@ -1,45 +1,72 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { Expense } from '../../models/expense.model';
+import { Transaction } from '../../models/transaction.model';
 import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-expense-chart',
   templateUrl: './expense-chart.component.html',
-  styleUrl: './expense-chart.component.scss'
+  styleUrls: ['./expense-chart.component.scss']
 })
-
 export class ExpenseChartComponent implements OnChanges {
 
-  @Input() expenses: Expense[] = [];
-  chart: any;
+  @Input() transactions: Transaction[] = [];
+  chart: Chart | undefined;
 
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(private categoriesService: CategoriesService) { }
 
-  ngOnChanges() {
-    this.renderChart();
+  ngOnChanges(): void {
+    if (this.transactions.length) {
+      this.renderChart();
+    }
   }
 
-  renderChart() {
-    const categoryTotals: Record<string, number> = {};
+  renderChart(): void {
 
-    this.expenses.forEach(e => {
-      const categoryName =
-        this.categoriesService.getCategoryName(e.categoryId);
+    const incomeTotal = 0;
+    const expenseTotals: Record<string, number> = {};
 
-      categoryTotals[categoryName] =
-        (categoryTotals[categoryName] || 0) + e.amount;
+    let totalIncome = 0;
+
+    this.transactions.forEach(t => {
+      if (t.type === 'income') {
+        totalIncome += t.amount;
+      } else {
+        if (t.categoryId) {
+          const categoryName =
+            this.categoriesService.getCategoryName(t.categoryId);
+          expenseTotals[categoryName] = (expenseTotals[categoryName] || 0) + t.amount;
+        }
+      }
     });
 
-    if (this.chart) this.chart.destroy();
+    const labels = ['Income', ...Object.keys(expenseTotals)];
+    const data = [totalIncome, ...Object.values(expenseTotals)];
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
 
     this.chart = new Chart('expenseChart', {
-      type: 'doughnut',
+      type: 'pie',
       data: {
-        labels: Object.keys(categoryTotals), 
-        datasets: [{
-          data: Object.values(categoryTotals)
-        }]
+        labels,
+        datasets: [
+          {
+            data,
+            backgroundColor: [
+              'green',              // income
+              '#ff4d4d', '#ff944d', '#ffd24d', '#ff6666' // expenses
+            ]
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
       }
     });
   }
