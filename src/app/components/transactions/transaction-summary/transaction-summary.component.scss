@@ -1,0 +1,26 @@
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.income {
+  color: #16a34a;
+}
+
+.expense {
+  color: #dc2626;
+}
+
+.balance {
+  color: #4f46e5;
+}

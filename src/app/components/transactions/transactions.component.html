@@ -1,127 +1,28 @@
-<h2>Transaction Tracker</h2>
+<h1>💰 Transaction Tracker</h1>
 
-<h3 style="color: green;">Income: ${{ totalIncome }}</h3>
-<h3 style="color: red;">Expense: ${{ totalExpense }}</h3>
-<h3>Balance: ${{ balance }}</h3>
-
-<hr>
-
-<form (ngSubmit)="editTransactionId ? updateTransaction() : addTransaction()">
-
-  <label>
-    <input type="radio" value="income" [(ngModel)]="newTransaction.type" name="type">
-    Income
-  </label>
-
-  <label>
-    <input type="radio" value="expense" [(ngModel)]="newTransaction.type" name="type">
-    Expense
-  </label>
-
-  <input
-    type="text"
-    placeholder="Title"
-    [(ngModel)]="newTransaction.title"
-    name="title"
-    required
-  >
-
-  <input
-    type="number"
-    placeholder="Amount"
-    [(ngModel)]="newTransaction.amount"
-    name="amount"
-    required
-  >
-
-  <select
-    *ngIf="newTransaction.type === 'expense'"
-    [(ngModel)]="newTransaction.categoryId"
-    name="categoryId"
-    required
-  >
-    <option [ngValue]="undefined">Select Category</option>
-    <option *ngFor="let category of categories" [ngValue]="category.id">
-      {{ category.name }}
-    </option>
-  </select>
-
-  <input
-    type="date"
-    [(ngModel)]="newTransaction.date"
-    name="date"
-    required
-  >
-
-  <button type="submit">
-    {{ editTransactionId ? 'Update' : 'Add' }}
-  </button>
-
-  <button
-    *ngIf="editTransactionId"
-    type="button"
-    (click)="cancelEdit()"
-  >
-    Cancel
-  </button>
-</form>
-
-<hr>
-
-<!-- FILTERS -->
-<label>Filter by Category:</label>
-<select [(ngModel)]="selectedCategoryId">
-  <option [ngValue]="null">All Categories</option>
-  <option *ngFor="let category of categories" [ngValue]="category.id">
-    {{ category.name }}
-  </option>
-</select>
-
-<label>From:</label>
-<input type="date" [(ngModel)]="fromDate">
-
-<label>To:</label>
-<input type="date" [(ngModel)]="toDate">
-
-
-
-<!-- LIST -->
-<ul>
-  @for (transaction of filteredTransactions; track transaction.id) {
-    <li>
-
-    
-      <span
-        [style.color]="transaction.type === 'income' ? 'green' : 'red'">
-        {{ transaction.title }} – ${{ transaction.amount }}
-      </span>
-
-
-      <span *ngIf="transaction.type === 'expense'">
-        ({{ getCategoryName(transaction.categoryId) }})
-      </span>
-
-
-      <button (click)="editTransaction(transaction)">
-        Inline Edit
-      </button>
-
-
-      <button
-        [routerLink]="['/transactions/edit', transaction.id]">
-        Edit
-      </button>
-
-    
-      <button (click)="deleteTransaction(transaction.id!)">
-        Delete
-      </button>
-
-    </li>
-  }
-</ul>
-
-
-<app-transaction-chart
+<app-transaction-summary
   [transactions]="filteredTransactions">
-</app-transaction-chart>
+</app-transaction-summary>
+
+<app-transaction-add
+  [categories]="categories"
+  [transaction]="editingTransaction"
+  (save)="saveTransaction($event)"
+  (cancel)="editingTransaction = null">
+</app-transaction-add>
+
+<app-transaction-filter
+  [categories]="categories"
+  (categoryChange)="selectedCategoryId = $event"
+  (fromDateChange)="fromDate = $event"
+  (toDateChange)="toDate = $event">
+</app-transaction-filter>
+
+<app-transaction-list
+  [transactions]="filteredTransactions"
+  [categories]="categories"
+  (edit)="edit($event)"
+  (delete)="delete($event)">
+</app-transaction-list>
+
+<app-transaction-chart [transactions]="filteredTransactions" />

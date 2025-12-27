@@ -1,0 +1,25 @@
+<div class="filters">
+
+  <select
+    [(ngModel)]="selectedCategoryId"
+    (ngModelChange)="categoryChange.emit($event)"
+  >
+    <option [ngValue]="null">All Categories</option>
+    <option *ngFor="let c of categories" [ngValue]="c.id">
+      {{ c.name }}
+    </option>
+  </select>
+
+  <input
+    type="date"
+    [(ngModel)]="fromDate"
+    (ngModelChange)="fromDateChange.emit($event)"
+  >
+
+  <input
+    type="date"
+    [(ngModel)]="toDate"
+    (ngModelChange)="toDateChange.emit($event)"
+  >
+
+</div>

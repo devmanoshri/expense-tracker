@@ -1,0 +1,23 @@
+<ul class="list">
+  <li
+    *ngFor="let t of transactions"
+    [class.income]="t.type === 'income'"
+    [class.expense]="t.type === 'expense'"
+  >
+
+    <div class="info">
+      <strong>{{ t.title }}</strong>
+      <span>${{ t.amount }}</span>
+      <small *ngIf="t.type === 'expense'">
+        {{ getCategoryName(t.categoryId) }}
+      </small>
+    </div>
+
+    <div class="actions">
+      <button (click)="edit.emit(t)">Inline Edit</button>
+      <button [routerLink]="['/transactions/edit', t.id]">Edit</button>
+      <button class="danger" (click)="delete.emit(t.id!)">Delete</button>
+    </div>
+
+  </li>
+</ul>

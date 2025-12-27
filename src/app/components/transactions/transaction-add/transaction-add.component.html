@@ -1,0 +1,30 @@
+<form (ngSubmit)="submit()">
+  <h3>{{ model.id ? 'Edit' : 'Add' }} Transaction</h3>
+
+  <label>
+    <input type="radio" value="income" [(ngModel)]="model.type" name="type">
+    Income
+  </label>
+  <label>
+    <input type="radio" value="expense" [(ngModel)]="model.type" name="type">
+    Expense
+  </label>
+
+  <input placeholder="Title" [(ngModel)]="model.title" name="title" required>
+  <input type="number" placeholder="Amount" [(ngModel)]="model.amount" name="amount" required>
+
+  <select *ngIf="model.type === 'expense'"
+          [(ngModel)]="model.categoryId"
+          name="categoryId"
+          required>
+    <option [ngValue]="undefined">Select Category</option>
+    <option *ngFor="let c of categories" [ngValue]="c.id">
+      {{ c.name }}
+    </option>
+  </select>
+
+  <input type="date" [(ngModel)]="model.date" name="date" required>
+
+  <button type="submit">{{ model.id ? 'Update' : 'Add' }}</button>
+  <button *ngIf="model.id" type="button" (click)="cancel.emit()">Cancel</button>
+</form>

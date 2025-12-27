@@ -1,0 +1,12 @@
+.chart-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 300px !important;  // 👈 THIS IS THE KEY
+}
