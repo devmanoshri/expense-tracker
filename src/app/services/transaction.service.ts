@@ -13,6 +13,8 @@ import { Transaction } from '../models/transaction.model';
 export class TransactionService {
 
   private apiUrl = `${environment.apiUrl}/transactions`;
+  //private apiUrl = '/api/transactions';
+
 
   constructor(private http: HttpClient) { }
 
