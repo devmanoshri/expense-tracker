@@ -1,3 +1,6 @@
+@let transactions = (transactions$ | async) || [];
+@let filteredTransactions = transactions | filterTransaction: selectedCategoryId: fromDate: toDate;
+
 <app-transaction-summary
   [transactions]="filteredTransactions">
 </app-transaction-summary>
@@ -16,11 +19,5 @@
   (toDateChange)="toDate = $event">
 </app-transaction-filter>
 
-<app-transaction-list
-  [transactions]="filteredTransactions"
-  [categories]="categories"
-  (edit)="edit($event)"
-  (delete)="delete($event)">
-</app-transaction-list>
+<app-transaction-list></app-transaction-list>
 
-<!-- <app-transaction-chart> </app-transaction-chart> -->

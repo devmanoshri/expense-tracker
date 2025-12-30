@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
-import { TransactionService } from '../../services/transaction.service';
 import { CategoriesService } from '../../services/categories.service';
+import { TransactionService } from '../../services/transaction.service';
 
-import { Transaction } from '../../models/transaction.model';
 import { Category } from '../../models/category.model';
+import { Transaction } from '../../models/transaction.model';
 
+import { Observable, of } from 'rxjs';
+import { FilterTransactionPipe } from '../../pipes/filter-transaction.pipe';
 import { TransactionAddComponent } from './transaction-add/transaction-add.component';
-import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { TransactionFilterComponent } from './transaction-filter/transaction-filter.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { TransactionSummaryComponent } from './transaction-summary/transaction-summary.component';
-import { TransactionChartComponent } from "./transaction-chart/transaction-chart.component";
 
 
 @Component({
@@ -23,14 +24,14 @@ import { TransactionChartComponent } from "./transaction-chart/transaction-chart
     TransactionListComponent,
     TransactionFilterComponent,
     TransactionSummaryComponent,
-    TransactionChartComponent
+    FilterTransactionPipe
   ],
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {
 
-  transactions: Transaction[] = [];
+  transactions$: Observable<Transaction[]> = of([]);
   categories: Category[] = [];
 
   selectedCategoryId: string | null = null;
@@ -45,36 +46,13 @@ export class TransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadTransactions();
+    this.transactions$ = this.transactionService.getTransactions();
     this.categoryService.getCategories().subscribe(c => this.categories = c);
   }
 
   loadTransactions() {
-    this.transactionService.getTransactions()
-      .subscribe(t => this.transactions = t);
   }
 
-  /* ===== FILTERED DATA ===== */
-  get filteredTransactions(): Transaction[] {
-    return this.transactions.filter(t => {
-      if (
-        this.selectedCategoryId &&
-        t.type === 'expense' &&
-        t.categoryId !== this.selectedCategoryId
-      ) return false;
-
-      const tx = new Date(t.date).getTime();
-      const from = this.fromDate ? new Date(this.fromDate).getTime() : null;
-      const to = this.toDate ? new Date(this.toDate).getTime() : null;
-
-      if (from && tx < from) return false;
-      if (to && tx > to) return false;
-
-      return true;
-    });
-  }
-
-  /* ===== CRUD ===== */
   saveTransaction(tx: Transaction) {
     const req = tx.id
       ? this.transactionService.updateTransaction(tx)
@@ -90,7 +68,7 @@ export class TransactionsComponent implements OnInit {
     this.editingTransaction = tx;
   }
 
-  delete(id: string) {
+  onDeleteTransaction(id: string) {
     const confirmDelete = confirm('Are you sure you want to delete this transaction?');
     if (!confirmDelete) return;
     this.transactionService.deleteTransaction(id)
