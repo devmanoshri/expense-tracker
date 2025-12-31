@@ -56,7 +56,6 @@ export class TransactionFilterComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.getFormControlByName('categoryId')?.valueChanges.subscribe(
         (categoryId) => {
-          this.getFormControlByName('categoryId')?.setValue(categoryId);
           this.categoryChange.emit(categoryId);
         }
       )

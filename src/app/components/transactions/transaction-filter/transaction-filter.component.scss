@@ -18,27 +18,11 @@
     }
   }
 
-  input,
-  select {
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    font-size: 1rem;
-    margin-right: 0.5rem;
-  }
-
   .filters {
     display: flex;
     gap: 1rem;
     // padding: 1rem;
     border-radius: 12px;
-
-    select,
-    input {
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: 1px solid #e5e7eb;
-    }
 
     @media (max-width: 768px) {
       flex-direction: column;
