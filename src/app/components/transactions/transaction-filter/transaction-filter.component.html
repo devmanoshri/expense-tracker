@@ -1,16 +1,44 @@
 <div class="filter-wrapper">
-  <h2> Filter transaction</h2>
+  <h2>Filter transactions</h2>
   <div class="filters">
-    <select [(ngModel)]="selectedCategoryId" (ngModelChange)="categoryChange.emit($event)">
-      <option [ngValue]="null">All Categories</option>
-      <option *ngFor="let c of categories" [ngValue]="c.id">
-        {{ c.name }}
-      </option>
-    </select>
+    <form [formGroup]="filterForm">
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            value="income"
+            formControlName="transactionType"
+          />
+          Income
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="expense"
+            formControlName="transactionType"
+          />
+          Expense
+        </label>
+      </div>
+      <select formControlName="categoryId">
+        <option value="">Select Category</option>
+        <option
+          *ngFor="
+            let category of categories
+              | filterCategory
+                : getFormControlByName('transactionType')?.value ?? 'income'
+          "
+          [value]="category.id"
+        >
+          {{ category.name }}
+        </option>
+      </select>
 
-    <input type="date" [(ngModel)]="fromDate" (ngModelChange)="fromDateChange.emit($event)">
+      <label for="fromDate">From</label>
+      <input type="date" id="fromDate" formControlName="fromDate" />
 
-    <input type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange.emit($event)">
-
+      <label for="toDate">To</label>
+      <input type="date" id="toDate" formControlName="toDate" />
+    </form>
   </div>
 </div>
