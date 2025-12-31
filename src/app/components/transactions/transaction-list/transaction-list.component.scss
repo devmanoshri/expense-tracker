@@ -8,7 +8,11 @@
   @media (max-width: 768px) {
     padding: 0.5rem;
   }
-
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .transaction-list {
     list-style: none;
     padding: 0;
@@ -17,7 +21,7 @@
       border-radius: var(--container-border-radius);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       padding: 1rem;
-      margin-bottom: .7rem;
+      margin-bottom: 0.7rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -47,7 +51,7 @@
   }
 
   .actions button {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
 
   small {
@@ -58,11 +62,9 @@
 
   .category-name-expense {
     background-color: rgba(249, 112, 104, 0.5);
-
   }
 
   .category-name-income {
     background-color: rgba(223, 228, 155, 0.5);
   }
-
 }

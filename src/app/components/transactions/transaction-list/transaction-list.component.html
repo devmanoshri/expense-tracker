@@ -1,29 +1,52 @@
 <div class="transaction-list-contaier">
-  <h2>Transaction List</h2>
+  <div class="list-header">
+    <h2>Transaction List</h2>
+    <div class="list-sort-wrapper">
+      <label for="list-sort">Sort</label>
+      <select name="list-sort" id="list-sort" (change)="onSelectSorting($event)">
+        <option value="desc">Newest</option>
+        <option value="asc">Oldest</option>
+      </select>
+    </div>
+  </div>
 
   <ul class="transaction-list">
-    <li *ngFor="let transaction of transactions" [class.income]="transaction.type === 'income'"
-      [class.expense]="transaction.type === 'expense'">
-
+    <li
+      *ngFor="let transaction of sortedTransactions"
+      [class.income]="transaction.type === 'income'"
+      [class.expense]="transaction.type === 'expense'"
+    >
       <div class="info">
         <div class="item-name bold-text">{{ transaction.title }}</div>
         <div>
           <span> ${{ transaction.amount }}</span>
-          <small class="category-name-expense" *ngIf="transaction.type === 'expense'">
+          <small
+            class="category-name-expense"
+            *ngIf="transaction.type === 'expense'"
+          >
             {{ getCategoryName(transaction.categoryId) }}
           </small>
-          <small class="category-name-income" *ngIf="transaction.type === 'income'">
-           {{ getCategoryName(transaction.categoryId) }}
+          <small
+            class="category-name-income"
+            *ngIf="transaction.type === 'income'"
+          >
+            {{ getCategoryName(transaction.categoryId) }}
           </small>
+          <small>{{ transaction.date | date }}</small>
         </div>
       </div>
 
       <div class="actions">
-        <!-- <button (click)="edit.emit(transaction)" class="edit-btn">Inline Edit</button> -->
-        <button [routerLink]="['/transactions', transaction.id]" class="edit-btn">Edit</button>
-        <button (click)="onDelete(transaction.id!)" type="button">Delete</button>
+        <button
+          [routerLink]="['/transactions', transaction.id]"
+          class="edit-btn"
+        >
+          Edit
+        </button>
+        <button (click)="onDelete(transaction.id!)" type="button">
+          Delete
+        </button>
       </div>
-
     </li>
   </ul>
 </div>
