@@ -9,11 +9,11 @@ export const routes: Routes = [
         pathMatch: 'full',
         component: TransactionsComponent
     },
-    { path: 'transactions/edit/:id', component: TransactionEditComponent },
+    { path: 'transactions/:id', component: TransactionEditComponent },
     {
-        path: 'add',
+        path: 'transaction',
         loadComponent: () => {
-            return import('./components/transactions/transaction-add/transaction-add.component').then(m => m.TransactionAddComponent);
+            return import('./components/transactions/transaction-edit/transaction-edit.component').then(m => m.TransactionEditComponent);
         }
     },
     {
@@ -29,7 +29,7 @@ export const routes: Routes = [
             return import('./components/transactions/transaction-chart/transaction-chart.component').then(m => m.TransactionChartComponent);
         }
     }
-];
+]; 
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
