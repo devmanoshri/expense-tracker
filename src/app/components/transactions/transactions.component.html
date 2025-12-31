@@ -14,7 +14,7 @@ fromDate, toDate}; @let categories = (categories$ | async) || [];
     </app-transaction-filter> -->
     <app-transaction-list
       [showSorting]="false"
-      [transactions]="filteredTransactions | sortTransaction | slice : 0 : 100"
+      [transactions]="filteredTransactions | sortTransaction | slice : 0 : 10"
     ></app-transaction-list>
   </div>
   <div class="transaction-chart">
