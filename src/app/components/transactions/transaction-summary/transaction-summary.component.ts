@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
+import { TransactionStoreService } from '../../../services/transaction-store.service';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -9,23 +12,39 @@ import { Transaction } from '../../../models/transaction.model';
   templateUrl: './transaction-summary.component.html',
   styleUrls: ['./transaction-summary.component.scss']
 })
+
 export class TransactionSummaryComponent {
 
-  @Input() transactions: Transaction[] = [];
+  @Input() selectedTransactions: Transaction[] | undefined;
 
-  get totalIncome(): number {
-    return this.transactions
-      .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + t.amount, 0);
-  }
+  //transactions$: Observable<Transaction[]> = of([]);
+  //selectedTransactions: Transaction[] | undefined;
 
-  get totalExpense(): number {
-    return this.transactions
-      .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + t.amount, 0);
-  }
+  // private transactionStoreServices = inject(TransactionStoreService);
 
-  get balance(): number {
+
+  // ngOnInit(): void {
+  //   this.transactionStoreServices.initTransaction();
+  //   this.transactions$ = this.transactionStoreServices.transactions$;
+  //   this.transactions$.subscribe((transactions) => this.selectedTransactions = transactions);
+  // }
+
+  get totalIncome(): number | undefined {
+    if (!this.selectedTransactions) return;
+    return this.selectedTransactions.filter(transaction => transaction.type === 'income')
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  };
+
+  get totalExpense(): number | undefined {
+    if (!this.selectedTransactions) return;
+    return this.selectedTransactions.filter(transaction => transaction.type === 'expense')
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+  };
+
+  get balance(): number | undefined {
+    if (!this.totalIncome || !this.totalExpense) return;
     return this.totalIncome - this.totalExpense;
   }
+
 }
