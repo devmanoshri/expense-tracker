@@ -13,7 +13,7 @@ import { TransactionService } from '../../../services/transaction.service';
 @Component({
   selector: 'app-transaction-edit',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, JsonPipe, FilterCategoryPipe],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, FilterCategoryPipe],
   templateUrl: './transaction-edit.component.html',
   styleUrls: ['./transaction-edit.component.scss']
 })
@@ -24,6 +24,7 @@ export class TransactionEditComponent implements OnInit {
   categories$: Observable<Category[]> = of([]);
   selectedTransaction: Transaction | undefined;
   updatedTransaction: Transaction | undefined;
+  formTitle: string = '';
 
   private categoryStoreServices = inject(CategoryStoreService);
   private transactionStoreServices = inject(TransactionStoreService);
@@ -32,7 +33,7 @@ export class TransactionEditComponent implements OnInit {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
 
-  editTransactionForm = this.formBuilder.nonNullable.group({
+  transactionForm = this.formBuilder.nonNullable.group({
     type: ['expense' as TransactionType, Validators.required],
     title: ['', Validators.required],
     amount: [0, [Validators.required, Validators.min(1)]],
@@ -40,38 +41,44 @@ export class TransactionEditComponent implements OnInit {
     date: ['', Validators.required]
   });
 
-  ngOnInit(): void {
-    const editId = this.route.snapshot.paramMap.get('id');
-    if (!editId) return;
+  editId: any;
 
+  ngOnInit(): void {
     this.categoryStoreServices.initCategory();
     this.transactionStoreServices.initTransaction();
 
     this.transactions$ = this.transactionStoreServices.transactions$;
     this.categories$ = this.categoryStoreServices.categories$;
 
-
-    this.transactions$.subscribe((transactions) => transactions.filter((transaction) => {
-      if (transaction.id === editId) {
-        this.selectedTransaction = transaction;
-        this.editTransactionForm.get('type')?.setValue(transaction.type);
-        this.editTransactionForm.get('title')?.setValue(transaction.title);
-        this.editTransactionForm.get('categoryId')?.setValue(transaction.categoryId);
-        this.editTransactionForm.get('amount')?.setValue(transaction.amount);
-        this.editTransactionForm.get('date')?.setValue(transaction.date);
-      }
-    }));
+    // update
+    this.editId = this.route.snapshot.paramMap.get('id');
+    if (this.editId) {
+      this.formTitle = 'Edit Transaction';
+      this.transactions$.subscribe((transactions) => transactions.filter((transaction) => {
+        if (transaction.id === this.editId) {
+          this.selectedTransaction = transaction;
+          this.transactionForm.get('type')?.setValue(transaction.type);
+          this.transactionForm.get('title')?.setValue(transaction.title);
+          this.transactionForm.get('categoryId')?.setValue(transaction.categoryId);
+          this.transactionForm.get('amount')?.setValue(transaction.amount);
+          this.transactionForm.get('date')?.setValue(transaction.date);
+        }
+      }));
+    } else {
+      // add
+      this.formTitle = 'Add Transaction';
+    }
 
   }
 
   updateTransaction(): void {
-    if (!this.selectedTransaction || this.editTransactionForm.invalid) {
+    if (!this.selectedTransaction || this.transactionForm.invalid) {
       return;
     }
 
     const updatedTransactionData: Transaction = {
       ...this.selectedTransaction,
-      ...this.editTransactionForm.value
+      ...this.transactionForm.value
     };
 
     this.transactionService.updateTransaction(updatedTransactionData)
@@ -82,7 +89,24 @@ export class TransactionEditComponent implements OnInit {
       });
   }
 
+  addTransaction(): void {
+    console.log('we are at add transaction.');
+    if (this.transactionForm.invalid) return;
 
+    const newTransaction: Transaction = {
+      ...this.transactionForm.getRawValue()
+    };
+
+    this.transactionService.addTransaction(newTransaction).subscribe(() => {
+      alert('Transaction added seccessfully!');
+      this.transactionStoreServices.initTransaction(true);
+      this.router.navigate(['/']);
+    })
+  }
+
+  onSubmit():void{
+    this.editId ? this.updateTransaction(): this.addTransaction()
+  }
 
   cancelEdit(): void {
     this.router.navigate(['/']);

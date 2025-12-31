@@ -1,6 +1,6 @@
 <div class="edit-container">
-  <h2>Edit Transaction</h2>
-  <form [formGroup]="editTransactionForm" (ngSubmit)="updateTransaction()">
+  <h2>{{formTitle}}</h2>
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <div class="radio-group">
       <label>
         <input type="radio" value="income" formControlName="type"> Income
@@ -16,11 +16,12 @@
     <select formControlName="categoryId">
       <option value="">Select Category</option>
       <option *ngFor="let category of (categories$ | async)
-      | filterCategory:editTransactionForm.get('type')?.value" [value]="category.id"> {{ category.name }}</option>
+      | filterCategory:(transactionForm.get('type')?.value??'expense')" [value]="category.id"> {{ category.name }}
+      </option>
     </select>
 
     <input type="date" formControlName="date">
-    <button type="submit" [disabled]="editTransactionForm.invalid">Update</button>
+    <button type="submit" [disabled]="transactionForm.invalid">{{editId?'Update':'Add'}}</button>
     <button type="button" (click)="cancelEdit()">Cancel</button>
 
   </form>
