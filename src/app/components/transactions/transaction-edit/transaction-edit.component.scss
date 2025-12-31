@@ -37,11 +37,8 @@ form {
 }
 
 input, select {
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  font-size: 1rem;
   width: 100%;
+  margin: 0;
 }
 
 button {
@@ -53,10 +50,3 @@ button {
   transition: all 0.2s ease;
 }
 
-
-
-
-
-select:invalid {
-  color: #9ca3af; 
-}
