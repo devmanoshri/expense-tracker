@@ -1,7 +1,7 @@
 .transaction-list-contaier {
   background: var(--color-white);
   padding: 2rem;
-  border-radius: 0 0 var(--container-border-radius) var(--container-border-radius);
+  border-radius: var(--container-border-radius);
   box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.15);
   width: 100%;
 

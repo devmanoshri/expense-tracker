@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Category } from '../../../models/category.model';
@@ -19,8 +19,9 @@ import { TransactionService } from '../../../services/transaction.service';
 
 export class TransactionListComponent implements OnInit {
 
-  transactions$!: Observable<Transaction[]>;
+  //transactions$!: Observable<Transaction[]>;
   categories$!: Observable<Category[]>;
+  @Input() transactions: Transaction[] | undefined;
 
   private categoryStoreServices = inject(CategoryStoreService);
   private transactionStoreServices = inject(TransactionStoreService);
@@ -28,9 +29,9 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryStoreServices.initCategory();
-    this.transactionStoreServices.initTransaction();
+    // this.transactionStoreServices.initTransaction();
 
-    this.transactions$ = this.transactionStoreServices.transactions$;
+    //this.transactions$ = this.transactionStoreServices.transactions$;
     this.categories$ = this.categoryStoreServices.categories$;
   }
 

@@ -2,7 +2,7 @@
   <h2>Transaction List</h2>
 
   <ul class="transaction-list">
-    <li *ngFor="let transaction of transactions$ |async" [class.income]="transaction.type === 'income'"
+    <li *ngFor="let transaction of transactions" [class.income]="transaction.type === 'income'"
       [class.expense]="transaction.type === 'expense'">
 
       <div class="info">
@@ -13,14 +13,14 @@
             {{ getCategoryName(transaction.categoryId) }}
           </small>
           <small class="category-name-income" *ngIf="transaction.type === 'income'">
-            Income
+           {{ getCategoryName(transaction.categoryId) }}
           </small>
         </div>
       </div>
 
       <div class="actions">
         <!-- <button (click)="edit.emit(transaction)" class="edit-btn">Inline Edit</button> -->
-        <button [routerLink]="['/transactions/edit', transaction.id]" class="edit-btn">Edit</button>
+        <button [routerLink]="['/transactions', transaction.id]" class="edit-btn">Edit</button>
         <button (click)="onDelete(transaction.id!)" type="button">Delete</button>
       </div>
 
