@@ -4,16 +4,17 @@ fromDate, toDate}; @let categories = (categories$ | async) || [];
 
 <div class="transaction-wrapper">
   <div class="transaction-details">
-    <app-transaction-filter
+    <!-- <app-transaction-filter
       [categories]="categories"
       (transactionTypeChange)="transactionType = $event ?? ''"
       (categoryChange)="selectedCategoryId = $event ?? ''"
       (fromDateChange)="fromDate = $event"
       (toDateChange)="toDate = $event"
     >
-    </app-transaction-filter>
+    </app-transaction-filter> -->
     <app-transaction-list
-      [transactions]="filteredTransactions"
+      [showSorting]="false"
+      [transactions]="filteredTransactions | sortTransaction | slice : 0 : 100"
     ></app-transaction-list>
   </div>
   <div class="transaction-chart">
