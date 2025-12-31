@@ -1,125 +1,715 @@
 {
   "transactions": [
-    { "id": "1", "title": "Groceries december", "amount": 3200, "type": "expense", "categoryId": "2", "date": "2025-01-02" },
-    { "id": "2", "title": "House rent amount", "amount": 18000, "type": "expense", "categoryId": "5", "date": "2025-01-28" },
-    { "id": "3", "title": "Ruter bilett", "amount": 780, "type": "expense", "categoryId": "5", "date": "2025-01-10" },
-    { "id": "4", "title": "Story Books", "amount": 900, "type": "expense", "categoryId": "6", "date": "2025-02-18" },
-    { "id": "5", "title": "Sosages packs", "amount": 600, "type": "expense", "categoryId": "2", "date": "2025-02-22" },
-    { "id": "7372", "title": "extra expense", "amount": 430, "categoryId": "2", "date": "2025-12-24", "type": "expense" },
-    { "id": "be7a", "title": "salary amount", "amount": 30000, "type": "income", "date": "2025-12-01", "categoryId": "7" },
-    { "id": "4cf8", "title": "cosmetics all", "amount": 300, "type": "expense", "categoryId": "2", "date": "2025-12-25" },
-    { "id": "93f6", "title": "christmas gift", "amount": 2000, "type": "income", "categoryId": "8", "date": "2025-12-24" },
-    { "id": "1439", "type": "expense", "title": "jul sale", "amount": 550, "categoryId": "4", "date": "2025-12-30" },
-    { "id": "2768", "type": "expense", "title": "wood", "amount": 680, "categoryId": "2", "date": "2025-12-16" },
-
-    { "id": "j1", "title": "January Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-01-01" },
-    { "id": "j2", "title": "Electricity bill", "amount": 1200, "type": "expense", "categoryId": "2", "date": "2025-01-05" },
-    { "id": "j3", "title": "Weekly groceries", "amount": 850, "type": "expense", "categoryId": "1", "date": "2025-01-12" },
-    { "id": "j4", "title": "Coffee with friends", "amount": 220, "type": "expense", "categoryId": "6", "date": "2025-01-19" },
-
-    { "id": "f1", "title": "February Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-02-01" },
-    { "id": "f2", "title": "House rent", "amount": 18000, "type": "expense", "categoryId": "5", "date": "2025-02-28" },
-    { "id": "f3", "title": "Bus pass", "amount": 800, "type": "expense", "categoryId": "3", "date": "2025-02-06" },
-    { "id": "f4", "title": "Dinner outside", "amount": 950, "type": "expense", "categoryId": "1", "date": "2025-02-14" },
-
-    { "id": "m1", "title": "March Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-03-01" },
-    { "id": "m2", "title": "Internet bill", "amount": 650, "type": "expense", "categoryId": "2", "date": "2025-03-07" },
-    { "id": "m3", "title": "Clothes shopping", "amount": 2400, "type": "expense", "categoryId": "4", "date": "2025-03-15" },
-
-    { "id": "a1", "title": "April Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-04-01" },
-    { "id": "a2", "title": "Groceries", "amount": 1100, "type": "expense", "categoryId": "1", "date": "2025-04-10" },
-    { "id": "a3", "title": "Movie night", "amount": 420, "type": "expense", "categoryId": "6", "date": "2025-04-21" },
-
-    { "id": "may1", "title": "May Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-05-01" },
-    { "id": "may2", "title": "Gym membership", "amount": 900, "type": "expense", "categoryId": "6", "date": "2025-05-05" },
-    { "id": "may3", "title": "Train tickets", "amount": 1300, "type": "expense", "categoryId": "3", "date": "2025-05-18" },
-
-    { "id": "jun1", "title": "June Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-06-01" },
-    { "id": "jun2", "title": "Summer clothes", "amount": 2800, "type": "expense", "categoryId": "4", "date": "2025-06-12" },
-    { "id": "jun3", "title": "Groceries", "amount": 980, "type": "expense", "categoryId": "1", "date": "2025-06-20" },
-
-    { "id": "jul1", "title": "July Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-07-01" },
-    { "id": "jul2", "title": "Vacation hotel", "amount": 5200, "type": "expense", "categoryId": "6", "date": "2025-07-15" },
-    { "id": "jul3", "title": "Flight tickets", "amount": 7600, "type": "expense", "categoryId": "3", "date": "2025-07-10" },
-
-    { "id": "aug1", "title": "August Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-08-01" },
-    { "id": "aug2", "title": "School supplies", "amount": 1600, "type": "expense", "categoryId": "4", "date": "2025-08-18" },
-
-    { "id": "sep1", "title": "September Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-09-01" },
-    { "id": "sep2", "title": "Electricity bill", "amount": 1350, "type": "expense", "categoryId": "2", "date": "2025-09-09" },
-
-    { "id": "oct1", "title": "October Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-10-01" },
-    { "id": "oct2", "title": "Winter jacket", "amount": 4200, "type": "expense", "categoryId": "4", "date": "2025-10-16" },
-
-    { "id": "nov1", "title": "November Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-11-01" },
-    { "id": "nov2", "title": "Phone bill", "amount": 450, "type": "expense", "categoryId": "2", "date": "2025-11-06" },
-    { "id": "nov3", "title": "Birthday gift", "amount": 1200, "type": "expense", "categoryId": "4", "date": "2025-11-22" },
-
-    { "id": "dec1", "title": "December Salary", "amount": 30000, "type": "income", "categoryId": "7", "date": "2025-12-01" },
-    { "id": "dec2", "title": "New year groceries", "amount": 2100, "type": "expense", "categoryId": "1", "date": "2025-12-29" },
-    { "id": "t2", "title": "House Rent", "amount": 18000, "type": "expense", "categoryId": "5", "date": "2025-01-05" },
-    { "id": "t3", "title": "Groceries", "amount": 3200, "type": "expense", "categoryId": "1", "date": "2025-01-10" },
-    { "id": "t4", "title": "Electricity Bill", "amount": 1200, "type": "expense", "categoryId": "2", "date": "2025-01-15" },
-    { "id": "t5", "title": "Bus Pass", "amount": 800, "type": "expense", "categoryId": "3", "date": "2025-01-20" },
-    { "id": "t6", "title": "Doctor Visit", "amount": 600, "type": "expense", "categoryId": "10", "date": "2025-01-22" },
-
-    { "id": "t8", "title": "House Rent", "amount": 18000, "type": "expense", "categoryId": "5", "date": "2025-02-05" },
-    { "id": "t9", "title": "Groceries", "amount": 2800, "type": "expense", "categoryId": "1", "date": "2025-02-12" },
-    { "id": "t10", "title": "Cinema Night", "amount": 450, "type": "expense", "categoryId": "11", "date": "2025-02-18" },
-    { "id": "t11", "title": "Online Course", "amount": 2200, "type": "expense", "categoryId": "12", "date": "2025-02-25" },
-
-    { "id": "t13", "title": "Freelance Project", "amount": 6000, "type": "income", "categoryId": "14", "date": "2025-03-10" },
-    { "id": "t14", "title": "Groceries", "amount": 3100, "type": "expense", "categoryId": "1", "date": "2025-03-11" },
-    { "id": "t15", "title": "Internet Bill", "amount": 650, "type": "expense", "categoryId": "2", "date": "2025-03-15" },
-    { "id": "t16", "title": "Savings Deposit", "amount": 3000, "type": "expense", "categoryId": "13", "date": "2025-03-28" },
-
-    { "id": "t18", "title": "House Rent", "amount": 18000, "type": "expense", "categoryId": "5", "date": "2025-04-05" },
-    { "id": "t19", "title": "Pharmacy", "amount": 450, "type": "expense", "categoryId": "10", "date": "2025-04-14" },
-    { "id": "t20", "title": "Shopping Mall", "amount": 2400, "type": "expense", "categoryId": "4", "date": "2025-04-21" },
-
-    { "id": "t22", "title": "Groceries", "amount": 2950, "type": "expense", "categoryId": "1", "date": "2025-05-09" },
-    { "id": "t23", "title": "Gym Membership", "amount": 900, "type": "expense", "categoryId": "11", "date": "2025-05-15" },
-    { "id": "t24", "title": "Gift Received", "amount": 1500, "type": "income", "categoryId": "8", "date": "2025-05-20" },
-
-    { "id": "t26", "title": "Vacation Booking", "amount": 5200, "type": "expense", "categoryId": "11", "date": "2025-06-10" },
-    { "id": "t27", "title": "Train Tickets", "amount": 1400, "type": "expense", "categoryId": "3", "date": "2025-06-18" },
-
-    { "id": "t29", "title": "Hotel Stay", "amount": 6800, "type": "expense", "categoryId": "11", "date": "2025-07-14" },
-    { "id": "t30", "title": "Local Food", "amount": 2100, "type": "expense", "categoryId": "1", "date": "2025-07-18" },
-
-    { "id": "t32", "title": "School Supplies", "amount": 1700, "type": "expense", "categoryId": "12", "date": "2025-08-19" },
-
-    { "id": "t34", "title": "Electricity Bill", "amount": 1400, "type": "expense", "categoryId": "2", "date": "2025-09-08" },
-    { "id": "t35", "title": "Savings Deposit", "amount": 4000, "type": "expense", "categoryId": "13", "date": "2025-09-25" },
-
-    { "id": "t37", "title": "Winter Jacket", "amount": 4200, "type": "expense", "categoryId": "4", "date": "2025-10-16" },
-
-    { "id": "t39", "title": "Phone Bill", "amount": 450, "type": "expense", "categoryId": "2", "date": "2025-11-07" },
-    { "id": "t40", "title": "Birthday Gift", "amount": 1200, "type": "expense", "categoryId": "4", "date": "2025-11-22" },
-
-    { "id": "t42", "title": "Christmas Shopping", "amount": 3500, "type": "expense", "categoryId": "4", "date": "2025-12-20" },
-    { "id": "t43", "title": "Christmas Gift", "amount": 2000, "type": "income", "categoryId": "8", "date": "2025-12-24" },
-    { "id": "t44", "title": "New Year Groceries", "amount": 2300, "type": "expense", "categoryId": "1", "date": "2025-12-29" }
+    {
+      "id": "1",
+      "title": "Groceries december",
+      "amount": 3200,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-01-02"
+    },
+    {
+      "id": "2",
+      "title": "House rent amount",
+      "amount": 18000,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-01-28"
+    },
+    {
+      "id": "3",
+      "title": "Ruter bilett",
+      "amount": 780,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-01-10"
+    },
+    {
+      "id": "4",
+      "title": "Story Books",
+      "amount": 900,
+      "type": "expense",
+      "categoryId": "6",
+      "date": "2025-02-18"
+    },
+    {
+      "id": "5",
+      "title": "Sosages packs",
+      "amount": 600,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-02-22"
+    },
+    {
+      "id": "7372",
+      "title": "extra expense",
+      "amount": 430,
+      "categoryId": "2",
+      "date": "2025-12-24",
+      "type": "expense"
+    },
+    {
+      "id": "be7a",
+      "title": "Jul bonus",
+      "amount": 30000,
+      "type": "income",
+      "date": "2025-12-01",
+      "categoryId": "7"
+    },
+    {
+      "id": "4cf8",
+      "title": "cosmetics all",
+      "amount": 300,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-12-25"
+    },
+    {
+      "id": "93f6",
+      "title": "christmas gift",
+      "amount": 2000,
+      "type": "income",
+      "categoryId": "8",
+      "date": "2025-12-24"
+    },
+    {
+      "id": "1439",
+      "type": "expense",
+      "title": "jul sale",
+      "amount": 550,
+      "categoryId": "4",
+      "date": "2025-12-30"
+    },
+    {
+      "id": "2768",
+      "type": "expense",
+      "title": "wood",
+      "amount": 680,
+      "categoryId": "2",
+      "date": "2025-12-16"
+    },
+    {
+      "id": "j1",
+      "title": "January Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-01-01"
+    },
+    {
+      "id": "j2",
+      "title": "Electricity bill",
+      "amount": 1200,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-01-05"
+    },
+    {
+      "id": "j3",
+      "title": "Weekly groceries",
+      "amount": 850,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-01-12"
+    },
+    {
+      "id": "j4",
+      "title": "Coffee with friends",
+      "amount": 220,
+      "type": "expense",
+      "categoryId": "6",
+      "date": "2025-01-19"
+    },
+    {
+      "id": "f1",
+      "title": "February Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-02-01"
+    },
+    {
+      "id": "f2",
+      "title": "House rent",
+      "amount": 18000,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-02-28"
+    },
+    {
+      "id": "f3",
+      "title": "Bus pass",
+      "amount": 800,
+      "type": "expense",
+      "categoryId": "3",
+      "date": "2025-02-06"
+    },
+    {
+      "id": "f4",
+      "title": "Dinner outside",
+      "amount": 950,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-02-14"
+    },
+    {
+      "id": "m1",
+      "title": "March Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-03-01"
+    },
+    {
+      "id": "m2",
+      "title": "Internet bill",
+      "amount": 650,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-03-07"
+    },
+    {
+      "id": "m3",
+      "title": "Clothes shopping",
+      "amount": 2400,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-03-15"
+    },
+    {
+      "id": "a1",
+      "title": "April Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-04-01"
+    },
+    {
+      "id": "a2",
+      "title": "Groceries",
+      "amount": 1100,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-04-10"
+    },
+    {
+      "id": "a3",
+      "title": "Movie night",
+      "amount": 420,
+      "type": "expense",
+      "categoryId": "6",
+      "date": "2025-04-21"
+    },
+    {
+      "id": "may1",
+      "title": "May Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-05-01"
+    },
+    {
+      "id": "may2",
+      "title": "Gym membership",
+      "amount": 900,
+      "type": "expense",
+      "categoryId": "6",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "may3",
+      "title": "Train tickets",
+      "amount": 1300,
+      "type": "expense",
+      "categoryId": "3",
+      "date": "2025-05-18"
+    },
+    {
+      "id": "jun1",
+      "title": "June Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-06-01"
+    },
+    {
+      "id": "jun2",
+      "title": "Summer clothes",
+      "amount": 2800,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-06-12"
+    },
+    {
+      "id": "jun3",
+      "title": "Groceries",
+      "amount": 980,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-06-20"
+    },
+    {
+      "id": "jul1",
+      "title": "July Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-07-01"
+    },
+    {
+      "id": "jul2",
+      "title": "Vacation hotel",
+      "amount": 5200,
+      "type": "expense",
+      "categoryId": "6",
+      "date": "2025-07-15"
+    },
+    {
+      "id": "jul3",
+      "title": "Flight tickets",
+      "amount": 7600,
+      "type": "expense",
+      "categoryId": "3",
+      "date": "2025-07-10"
+    },
+    {
+      "id": "aug1",
+      "title": "August Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-08-01"
+    },
+    {
+      "id": "aug2",
+      "title": "School supplies",
+      "amount": 1600,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-08-18"
+    },
+    {
+      "id": "sep1",
+      "title": "September Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-09-01"
+    },
+    {
+      "id": "sep2",
+      "title": "Electricity bill",
+      "amount": 1350,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-09-09"
+    },
+    {
+      "id": "oct1",
+      "title": "October Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-10-01"
+    },
+    {
+      "id": "oct2",
+      "title": "Winter jacket",
+      "amount": 4200,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-10-16"
+    },
+    {
+      "id": "nov1",
+      "title": "November Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-11-01"
+    },
+    {
+      "id": "nov2",
+      "title": "Phone bill",
+      "amount": 450,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-11-06"
+    },
+    {
+      "id": "nov3",
+      "title": "Birthday gift",
+      "amount": 1200,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-11-22"
+    },
+    {
+      "id": "dec1",
+      "title": "December Salary",
+      "amount": 30000,
+      "type": "income",
+      "categoryId": "7",
+      "date": "2025-12-01"
+    },
+    {
+      "id": "dec2",
+      "title": "New year groceries",
+      "amount": 2100,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-12-29"
+    },
+    {
+      "id": "t2",
+      "title": "House Rent",
+      "amount": 18000,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-01-05"
+    },
+    {
+      "id": "t3",
+      "title": "Groceries",
+      "amount": 3200,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-01-10"
+    },
+    {
+      "id": "t4",
+      "title": "Electricity Bill",
+      "amount": 1200,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-01-15"
+    },
+    {
+      "id": "t5",
+      "title": "Bus Pass",
+      "amount": 800,
+      "type": "expense",
+      "categoryId": "3",
+      "date": "2025-01-20"
+    },
+    {
+      "id": "t6",
+      "title": "Doctor Visit",
+      "amount": 600,
+      "type": "expense",
+      "categoryId": "10",
+      "date": "2025-01-22"
+    },
+    {
+      "id": "t8",
+      "title": "House Rent",
+      "amount": 18000,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-02-05"
+    },
+    {
+      "id": "t9",
+      "title": "Groceries",
+      "amount": 2800,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-02-12"
+    },
+    {
+      "id": "t10",
+      "title": "Cinema Night",
+      "amount": 450,
+      "type": "expense",
+      "categoryId": "11",
+      "date": "2025-02-18"
+    },
+    {
+      "id": "t11",
+      "title": "Online Course",
+      "amount": 2200,
+      "type": "expense",
+      "categoryId": "12",
+      "date": "2025-02-25"
+    },
+    {
+      "id": "t13",
+      "title": "Freelance Project",
+      "amount": 6000,
+      "type": "income",
+      "categoryId": "14",
+      "date": "2025-03-10"
+    },
+    {
+      "id": "t14",
+      "title": "Groceries",
+      "amount": 3100,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-03-11"
+    },
+    {
+      "id": "t15",
+      "title": "Internet Bill",
+      "amount": 650,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-03-15"
+    },
+    {
+      "id": "t16",
+      "title": "Savings Deposit",
+      "amount": 3000,
+      "type": "expense",
+      "categoryId": "13",
+      "date": "2025-03-28"
+    },
+    {
+      "id": "t18",
+      "title": "House Rent",
+      "amount": 18000,
+      "type": "expense",
+      "categoryId": "5",
+      "date": "2025-04-05"
+    },
+    {
+      "id": "t19",
+      "title": "Pharmacy",
+      "amount": 450,
+      "type": "expense",
+      "categoryId": "10",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "t20",
+      "title": "Shopping Mall",
+      "amount": 2400,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-04-21"
+    },
+    {
+      "id": "t22",
+      "title": "Groceries",
+      "amount": 2950,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-05-09"
+    },
+    {
+      "id": "t23",
+      "title": "Gym Membership",
+      "amount": 900,
+      "type": "expense",
+      "categoryId": "11",
+      "date": "2025-05-15"
+    },
+    {
+      "id": "t24",
+      "title": "Gift Received",
+      "amount": 1500,
+      "type": "income",
+      "categoryId": "8",
+      "date": "2025-05-20"
+    },
+    {
+      "id": "t26",
+      "title": "Vacation Booking",
+      "amount": 5200,
+      "type": "expense",
+      "categoryId": "11",
+      "date": "2025-06-10"
+    },
+    {
+      "id": "t27",
+      "title": "Train Tickets",
+      "amount": 1400,
+      "type": "expense",
+      "categoryId": "3",
+      "date": "2025-06-18"
+    },
+    {
+      "id": "t29",
+      "title": "Hotel Stay",
+      "amount": 6800,
+      "type": "expense",
+      "categoryId": "11",
+      "date": "2025-07-14"
+    },
+    {
+      "id": "t30",
+      "title": "Local Food",
+      "amount": 2100,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-07-18"
+    },
+    {
+      "id": "t32",
+      "title": "School Supplies",
+      "amount": 1700,
+      "type": "expense",
+      "categoryId": "12",
+      "date": "2025-08-19"
+    },
+    {
+      "id": "t34",
+      "title": "Electricity Bill",
+      "amount": 1400,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-09-08"
+    },
+    {
+      "id": "t35",
+      "title": "Savings Deposit",
+      "amount": 4000,
+      "type": "expense",
+      "categoryId": "13",
+      "date": "2025-09-25"
+    },
+    {
+      "id": "t37",
+      "title": "Winter Jacket",
+      "amount": 4200,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-10-16"
+    },
+    {
+      "id": "t39",
+      "title": "Phone Bill",
+      "amount": 450,
+      "type": "expense",
+      "categoryId": "2",
+      "date": "2025-11-07"
+    },
+    {
+      "id": "t40",
+      "title": "Birthday Gift",
+      "amount": 1200,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-11-22"
+    },
+    {
+      "id": "t42",
+      "title": "Christmas Shopping",
+      "amount": 3500,
+      "type": "expense",
+      "categoryId": "4",
+      "date": "2025-12-20"
+    },
+    {
+      "id": "t43",
+      "title": "Christmas Gift",
+      "amount": 2000,
+      "type": "income",
+      "categoryId": "8",
+      "date": "2025-12-24"
+    },
+    {
+      "id": "t44",
+      "title": "New Year Groceries",
+      "amount": 2300,
+      "type": "expense",
+      "categoryId": "1",
+      "date": "2025-12-29"
+    },
+    {
+      "id": "2bee",
+      "type": "income",
+      "title": "december salary",
+      "amount": 25000,
+      "categoryId": "7",
+      "date": "2024-12-11"
+    }
   ],
-
-
   "transactionCategories": [
-    { "id": "1", "name": "Food", "type": "expense" },
-    { "id": "2", "name": "Utilities", "type": "expense" },
-    { "id": "3", "name": "Transport", "type": "expense" },
-    { "id": "4", "name": "Shopping", "type": "expense" },
-    { "id": "5", "name": "Monthly", "type": "expense" },
-    { "id": "6", "name": "Misc", "type": "expense" },
-    { "id": "7", "name": "Salary", "type": "income" },
-    { "id": "8", "name": "Gift", "type": "income" },
-    { "id": "10", "name": "Healthcare", "type": "expense" },
-    { "id": "11", "name": "Entertainment", "type": "expense" },
-    { "id": "12", "name": "Education", "type": "expense" },
-    { "id": "13", "name": "Savings", "type": "expense" },
-    { "id": "14", "name": "Freelance", "type": "income" },
-    { "id": "15", "name": "Other Income", "type": "income" },
-    { "id": "16", "name": "Dining", "type": "expense" },
-    { "id": "17", "name": "Vehicle", "type": "expense" },
-    { "id": "13", "name": "Travel", "type": "expense" }
+    {
+      "id": "1",
+      "name": "Food",
+      "type": "expense"
+    },
+    {
+      "id": "2",
+      "name": "Utilities",
+      "type": "expense"
+    },
+    {
+      "id": "3",
+      "name": "Transport",
+      "type": "expense"
+    },
+    {
+      "id": "4",
+      "name": "Shopping",
+      "type": "expense"
+    },
+    {
+      "id": "5",
+      "name": "Monthly",
+      "type": "expense"
+    },
+    {
+      "id": "6",
+      "name": "Misc",
+      "type": "expense"
+    },
+    {
+      "id": "7",
+      "name": "Salary",
+      "type": "income"
+    },
+    {
+      "id": "8",
+      "name": "Gift",
+      "type": "income"
+    },
+    {
+      "id": "10",
+      "name": "Healthcare",
+      "type": "expense"
+    },
+    {
+      "id": "11",
+      "name": "Entertainment",
+      "type": "expense"
+    },
+    {
+      "id": "12",
+      "name": "Education",
+      "type": "expense"
+    },
+    {
+      "id": "13",
+      "name": "Savings",
+      "type": "expense"
+    },
+    {
+      "id": "14",
+      "name": "Freelance",
+      "type": "income"
+    },
+    {
+      "id": "15",
+      "name": "Other Income",
+      "type": "income"
+    },
+    {
+      "id": "16",
+      "name": "Dining",
+      "type": "expense"
+    },
+    {
+      "id": "17",
+      "name": "Vehicle",
+      "type": "expense"
+    },
+    {
+      "id": "13",
+      "name": "Travel",
+      "type": "expense"
+    }
   ]
 }
