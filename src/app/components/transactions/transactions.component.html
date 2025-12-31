@@ -1,23 +1,25 @@
-@let transactions = (transactions$ | async) || [];
-@let filteredTransactions = transactions | filterTransaction: selectedCategoryId: fromDate: toDate;
+@let transactions = (transactions$ | async) || []; @let filteredTransactions =
+transactions | filterTransaction: {transactionType, selectedCategoryId,
+fromDate, toDate}; @let categories = (categories$ | async) || [];
 
-<app-transaction-summary
-  [transactions]="filteredTransactions">
-</app-transaction-summary>
-
-<app-transaction-add
-  [categories]="categories"
-  [transaction]="editingTransaction"
-  (save)="saveTransaction($event)"
-  (cancel)="editingTransaction = null">
-</app-transaction-add>
-
-<app-transaction-filter
-  [categories]="categories"
-  (categoryChange)="selectedCategoryId = $event"
-  (fromDateChange)="fromDate = $event"
-  (toDateChange)="toDate = $event">
-</app-transaction-filter>
-
-<app-transaction-list></app-transaction-list>
-
+<div class="transaction-wrapper">
+  <div class="transaction-details">
+    <app-transaction-filter
+      [categories]="categories"
+      (transactionTypeChange)="transactionType = $event ?? ''"
+      (categoryChange)="selectedCategoryId = $event ?? ''"
+      (fromDateChange)="fromDate = $event"
+      (toDateChange)="toDate = $event"
+    >
+    </app-transaction-filter>
+    <app-transaction-list
+      [transactions]="filteredTransactions"
+    ></app-transaction-list>
+  </div>
+  <div class="transaction-chart">
+    <app-transaction-summary
+      [selectedTransactions]="filteredTransactions"
+    ></app-transaction-summary>
+    <app-transaction-chart></app-transaction-chart>
+  </div>
+</div>
