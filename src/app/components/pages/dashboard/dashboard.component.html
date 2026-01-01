@@ -1,0 +1,19 @@
+@let transactions = (transactions$ | async) || []; 
+@let filteredTransactions = transactions | filterTransaction: {transactionType, selectedCategoryId,
+fromDate, toDate}; 
+@let categories = (categories$ | async) || [];
+
+<div class="transaction-wrapper">
+  <div class="transaction-details">
+    <app-transaction-list
+      [showSorting]="false"
+      [transactions]="filteredTransactions | sortTransaction | slice : 0 : 10"
+    ></app-transaction-list>
+  </div>
+  <div class="transaction-chart">
+    <app-transaction-summary
+      [selectedTransactions]="transactionsChangeFromChart"
+    ></app-transaction-summary> 
+<app-transaction-chart (transactionsChange)="onTransactionsChange($event)"></app-transaction-chart>
+  </div>
+</div>
