@@ -1,0 +1,59 @@
+<div class="chart-card">
+  <h2>Monthly Income vs Expense</h2>
+
+  <div class="chart-range">
+    <label>
+      <input
+        type="radio"
+        name="chartRange"
+        value="currentmonth"
+        (change)="onChooseDateRange('currentmonth')"
+      />
+      Current month
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="chartRange"
+        value="last3"
+        (change)="onChooseDateRange('last3')"
+      />
+      Last 3 months
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="chartRange"
+        value="last6"
+        (change)="onChooseDateRange('last6')"
+      />
+      Last 6 months
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="chartRange"
+        value="last12"
+        (change)="onChooseDateRange('last12')"
+      />
+      Last 1 year
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="chartRange"
+        value="all"
+        checked
+        (change)="onChooseDateRange('all')"
+      />
+      All
+    </label>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas #chartCanvas></canvas>
+  </div>
+</div>
