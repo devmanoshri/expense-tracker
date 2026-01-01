@@ -50,25 +50,25 @@ export class TransactionFilterComponent implements OnInit, OnDestroy {
         (transactionType) => {
           this.getFormControlByName('categoryId')?.setValue('');
           this.transactionTypeChange.emit(transactionType);
-        }
-      )
+        },
+      ),
     );
     this.subscriptions.add(
       this.getFormControlByName('categoryId')?.valueChanges.subscribe(
         (categoryId) => {
           this.categoryChange.emit(categoryId);
-        }
-      )
+        },
+      ),
     );
     this.subscriptions.add(
       this.getFormControlByName('fromDate')?.valueChanges.subscribe(
-        (fromDate) => this.fromDateChange.emit(fromDate)
-      )
+        (fromDate) => this.fromDateChange.emit(fromDate),
+      ),
     );
     this.subscriptions.add(
       this.getFormControlByName('toDate')?.valueChanges.subscribe((toDate) =>
-        this.toDateChange.emit(toDate)
-      )
+        this.toDateChange.emit(toDate),
+      ),
     );
   }
 

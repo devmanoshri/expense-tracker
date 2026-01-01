@@ -4,11 +4,9 @@ import { Category } from '../models/category.model';
 import { CategoriesService } from './categories.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CategoryStoreService {
-
   private _categories$ = new BehaviorSubject<Category[]>([]);
   private _categoryHasError$ = new BehaviorSubject(false);
 
@@ -19,17 +17,24 @@ export class CategoryStoreService {
       return;
     }
 
-    this.categoryServices.getCategories().pipe(
-      take(1), catchError(() => {
-        this._categoryHasError$.next(true);
-        return of([]);
-      })
-    ).subscribe((categoryData) => this._categories$.next(categoryData));
+    this.categoryServices
+      .getCategories()
+      .pipe(
+        take(1),
+        catchError(() => {
+          this._categoryHasError$.next(true);
+          return of([]);
+        }),
+      )
+      .subscribe((categoryData) => this._categories$.next(categoryData));
   }
 
   getCategoryNameById(id?: string): string {
     if (!id) return '';
-    return this._categories$.getValue().find(category => category.id === id)?.name || '';
+    return (
+      this._categories$.getValue().find((category) => category.id === id)
+        ?.name || ''
+    );
   }
 
   get categories$(): Observable<Category[]> {
@@ -39,5 +44,4 @@ export class CategoryStoreService {
   get categoryHasError$(): Observable<boolean> {
     return this._categoryHasError$.asObservable();
   }
-  
 }

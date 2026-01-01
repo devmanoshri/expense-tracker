@@ -4,12 +4,9 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-
 export class CategoriesService {
   private apiUrl = `${environment.apiUrl}/transactionCategories`;
   private categories: Category[] = [];
@@ -21,7 +18,7 @@ export class CategoriesService {
   }
 
   loadCategories() {
-    this.getCategories().subscribe(categories => {
+    this.getCategories().subscribe((categories) => {
       this.categories = categories;
     });
   }

@@ -4,19 +4,14 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Transaction } from '../models/transaction.model';
 
-
 @Injectable({
-  providedIn: 'root'
-
+  providedIn: 'root',
 })
-
 export class TransactionService {
-
   private apiUrl = `${environment.apiUrl}/transactions`;
   //private apiUrl = '/api/transactions';
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(this.apiUrl);
@@ -35,7 +30,9 @@ export class TransactionService {
   }
 
   updateTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.put<Transaction>(`${this.apiUrl}/${transaction.id}`, transaction);
+    return this.http.put<Transaction>(
+      `${this.apiUrl}/${transaction.id}`,
+      transaction,
+    );
   }
-
 }

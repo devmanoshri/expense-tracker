@@ -15,7 +15,7 @@ interface FilterOptions {
 export class FilterTransactionPipe implements PipeTransform {
   transform(
     transactions: Transaction[],
-    filterOptions: FilterOptions
+    filterOptions: FilterOptions,
   ): Transaction[] {
     const { transactionType, selectedCategoryId, fromDate, toDate } =
       filterOptions;

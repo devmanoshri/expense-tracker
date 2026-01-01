@@ -1,23 +1,23 @@
 <div class="transaction-list-contaier">
   <div class="list-header">
-    <h2>{{sortTitle}}</h2>
-    @if(showSorting){
-    <div class="list-sort-wrapper">
-      <label for="list-sort">Sort</label>
-      <select name="list-sort" id="list-sort" [formControl]="sortSelect">
-        <option [ngValue]="null">Select</option>
-        @for (item of selectSortObject; track $index) {
-        <option [ngValue]="item.value">{{ item.label }}</option>
-        }
-      </select>
-    </div>
+    <h2>{{ sortTitle }}</h2>
+    @if (showSorting) {
+      <div class="list-sort-wrapper">
+        <label for="list-sort">Sort</label>
+        <select name="list-sort" id="list-sort" [formControl]="sortSelect">
+          <option [ngValue]="null">Select</option>
+          @for (item of selectSortObject; track $index) {
+            <option [ngValue]="item.value">{{ item.label }}</option>
+          }
+        </select>
+      </div>
     }
   </div>
   <ul class="transaction-list">
     <li
       *ngFor="
         let transaction of transactions ?? []
-          | sortTransaction : sortBy?.orderBy : sortBy?.sortOrder
+          | sortTransaction: sortBy?.orderBy : sortBy?.sortOrder
       "
       [class.income]="transaction.type === 'income'"
       [class.expense]="transaction.type === 'expense'"

@@ -8,7 +8,7 @@ import { SortTransactionPipe } from '../../../pipes/sort-transaction.pipe';
 import { CategoryStoreService } from '../../../services/category-store.service';
 import { TransactionStoreService } from '../../../services/transaction-store.service';
 import { TransactionListComponent } from '../../shared/transaction-list/transaction-list.component';
-import { TransactionFilterComponent } from "./transaction-filter/transaction-filter.component";
+import { TransactionFilterComponent } from './transaction-filter/transaction-filter.component';
 
 @Component({
   selector: 'app-manage-transaction',
@@ -18,12 +18,11 @@ import { TransactionFilterComponent } from "./transaction-filter/transaction-fil
     FilterTransactionPipe,
     SlicePipe,
     SortTransactionPipe,
-    TransactionFilterComponent
-],
+    TransactionFilterComponent,
+  ],
   templateUrl: './manage-transaction.component.html',
   styleUrl: './manage-transaction.component.scss',
 })
-
 export class ManageTransactionComponent {
   transactions$!: Observable<Transaction[]>;
   categories$!: Observable<Category[]>;

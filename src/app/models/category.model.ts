@@ -1,4 +1,4 @@
-import { TransactionType } from "./transaction.model";
+import { TransactionType } from './transaction.model';
 
 export interface Category {
   id: string;

@@ -8,7 +8,7 @@ export class SortTransactionPipe implements PipeTransform {
   transform(
     transactions: Transaction[],
     sortBy: keyof Transaction = 'date',
-    sortOrder: 'desc' | 'asc' = 'desc'
+    sortOrder: 'desc' | 'asc' = 'desc',
   ): Transaction[] {
     if (!transactions) {
       return [];
@@ -29,7 +29,7 @@ export class SortTransactionPipe implements PipeTransform {
   compareNumbers(
     sortOrder: 'desc' | 'asc',
     aValue: number,
-    bValue: number
+    bValue: number,
   ): number {
     return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
   }
@@ -37,7 +37,7 @@ export class SortTransactionPipe implements PipeTransform {
   compareStrings(
     sortOrder: 'desc' | 'asc',
     aValue: string,
-    bValue: string
+    bValue: string,
   ): number {
     return sortOrder === 'asc'
       ? aValue.localeCompare(bValue)

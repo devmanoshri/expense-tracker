@@ -30,7 +30,7 @@ export class DashboardComponent {
   categories$!: Observable<Category[]>;
   selectedTransactions: Transaction[] | undefined;
   transactionsChangeFromChart: Transaction[] = [];
-  
+
   private transactionStoreServices = inject(TransactionStoreService);
   private categoryStoreServices = inject(CategoryStoreService);
 

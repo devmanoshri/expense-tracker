@@ -1,2 +1,1 @@
-export interface Ng {
-}
+export interface Ng {}

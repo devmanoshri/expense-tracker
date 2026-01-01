@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TransactionChartComponent } from '../../shared/transaction-chart/transaction-chart.component';
 import { Transaction } from '../../../models/transaction.model';
-import { TransactionSummaryComponent } from "./transaction-summary/transaction-summary.component";
+import { TransactionSummaryComponent } from './transaction-summary/transaction-summary.component';
 
 @Component({
   selector: 'app-chart-preview',

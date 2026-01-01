@@ -1,28 +1,36 @@
 <div class="edit-container">
-  <h2>{{formTitle}}</h2>
+  <h2>{{ formTitle }}</h2>
   <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
     <div class="radio-group">
       <label>
-        <input type="radio" value="income" formControlName="type"> Income
+        <input type="radio" value="income" formControlName="type" /> Income
       </label>
       <label>
-        <input type="radio" value="expense" formControlName="type"> Expense
+        <input type="radio" value="expense" formControlName="type" /> Expense
       </label>
     </div>
 
-    <input type="text" formControlName="title" placeholder="Title">
-    <input type="number" formControlName="amount" placeholder="Amount">
+    <input type="text" formControlName="title" placeholder="Title" />
+    <input type="number" formControlName="amount" placeholder="Amount" />
 
     <select formControlName="categoryId">
       <option value="">Select Category</option>
-      <option *ngFor="let category of (categories$ | async)
-      | filterCategory:(transactionForm.get('type')?.value??'expense')" [value]="category.id"> {{ category.name }}
+      <option
+        *ngFor="
+          let category of categories$
+            | async
+            | filterCategory: transactionForm.get('type')?.value ?? 'expense'
+        "
+        [value]="category.id"
+      >
+        {{ category.name }}
       </option>
     </select>
 
-    <input type="date" formControlName="date">
-    <button type="submit" [disabled]="transactionForm.invalid">{{editId?'Update':'Add'}}</button>
+    <input type="date" formControlName="date" />
+    <button type="submit" [disabled]="transactionForm.invalid">
+      {{ editId ? "Update" : "Add" }}
+    </button>
     <button type="button" (click)="cancelEdit()">Cancel</button>
-
   </form>
 </div>

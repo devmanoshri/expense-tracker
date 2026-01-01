@@ -1,14 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, Observable, of, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  finalize,
+  Observable,
+  of,
+  take,
+} from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 import { TransactionService } from './transaction.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class TransactionStoreService {
-
   private _transactions$ = new BehaviorSubject<Transaction[]>([]);
   private _transactionHasError$ = new BehaviorSubject<boolean>(false);
   private _transactionIsLoading$ = new BehaviorSubject<boolean>(false);
@@ -23,7 +28,8 @@ export class TransactionStoreService {
     this._transactionIsLoading$.next(true);
     this._transactionHasError$.next(false);
 
-    this.transationService.getTransactions()
+    this.transationService
+      .getTransactions()
       .pipe(
         take(1),
         catchError(() => {
@@ -32,11 +38,11 @@ export class TransactionStoreService {
         }),
         finalize(() => {
           this._transactionIsLoading$.next(false);
-        })
+        }),
       )
-      .subscribe(transactions => {
+      .subscribe((transactions) => {
         this._transactions$.next(transactions);
-      })
+      });
   }
 
   get transactions$(): Observable<Transaction[]> {
@@ -48,5 +54,4 @@ export class TransactionStoreService {
   get transactionIsLoading$(): Observable<boolean> {
     return this._transactionIsLoading$.asObservable();
   }
-
 }

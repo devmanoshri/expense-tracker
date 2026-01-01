@@ -33,7 +33,6 @@ interface SortBy {
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss'],
 })
-
 export class TransactionListComponent implements OnInit {
   @Input() transactions: Transaction[] | undefined;
   @Input() showSorting = true;
@@ -93,5 +92,4 @@ export class TransactionListComponent implements OnInit {
       .deleteTransaction(selectedTransactionId)
       .subscribe(() => this.transactionStoreServices.initTransaction(true));
   }
-
 }

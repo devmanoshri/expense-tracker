@@ -4,23 +4,17 @@ import { TransactionType } from '../models/transaction.model';
 
 @Pipe({
   name: 'filterCategory',
-  standalone: true
+  standalone: true,
 })
-
 export class FilterCategoryPipe implements PipeTransform {
-
   transform(
     categories: Category[] | null,
-    transactionType: TransactionType | null | undefined
+    transactionType: TransactionType | null | undefined,
   ): Category[] {
-
     if (!categories || !transactionType) {
       return categories ?? [];
     }
 
-    return categories.filter(
-      category => category.type === transactionType
-    );
-
+    return categories.filter((category) => category.type === transactionType);
   }
 }
