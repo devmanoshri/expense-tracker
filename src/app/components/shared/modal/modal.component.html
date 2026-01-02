@@ -1,0 +1,11 @@
+<div class="modal-background">
+  <div class="modal">
+    <div class="header">
+      <h2>{{ header }}</h2>
+      <a href="#" class="close" (click)="$event.preventDefault(); modalClose.emit()"><i class="bi bi-x-circle fs-3"></i></a>
+    </div>
+    <div class="modal-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
