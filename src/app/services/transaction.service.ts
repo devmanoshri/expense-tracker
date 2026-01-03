@@ -17,16 +17,27 @@ export class TransactionService {
     return this.http.get<Transaction[]>(this.apiUrl);
   }
 
-  addTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(this.apiUrl, transaction);
-  }
-
   getTransactionById(id: string): Observable<Transaction> {
     return this.http.get<Transaction>(`${this.apiUrl}/${id}`);
   }
 
   deleteTransaction(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  saveTransaction(
+    transaction: Transaction,
+    operation: 'add' | 'update',
+  ): Observable<Transaction> {
+    if (operation === 'add') {
+      return this.addTransaction(transaction);
+    } else {
+      return this.updateTransaction(transaction);
+    }
+  }
+
+  addTransaction(transaction: Transaction): Observable<Transaction> {
+    return this.http.post<Transaction>(this.apiUrl, transaction);
   }
 
   updateTransaction(transaction: Transaction): Observable<Transaction> {
