@@ -1,5 +1,5 @@
 .transaction-list-contaier {
-  background: var(--color-white);
+  background: var(--et-white);
   padding: 2rem;
   border-radius: var(--container-border-radius);
   box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.15);
@@ -59,11 +59,11 @@
   }
 
   .income {
-    border-left: 5px solid var(--color-amber) !important;
+    border-left: 5px solid var(--et-amber) !important;
   }
 
   .expense {
-    border-left: 5px solid var(--color-coral) !important;
+    border-left: 5px solid var(--et-coral) !important;
   }
 
   .actions button {

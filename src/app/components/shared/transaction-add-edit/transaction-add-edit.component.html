@@ -1,6 +1,6 @@
 <div class="edit-container">
   <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-    <div class="radio-group">
+    <div class="radio-group mb-3">
       <label>Transaction type</label>
       <div class="inline-form-group">
         <input type="radio" value="income" formControlName="transactionType" />
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="trTitle">Title</label>
       <input
         type="text"
@@ -20,8 +20,19 @@
         formControlName="title"
         placeholder="Title"
       />
+      <div
+        class="text-danger"
+        *ngIf="
+          transactionForm.controls.title.touched &&
+          transactionForm.controls.title.invalid
+        "
+      >
+        <span *ngIf="transactionForm.controls.title.errors?.['required']">
+          Title is required
+        </span>
+      </div>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="trAmount">Amount</label>
       <input
         type="number"
@@ -29,9 +40,23 @@
         formControlName="amount"
         placeholder="Amount"
       />
+      <div
+        class="text-danger"
+        *ngIf="
+          transactionForm.controls.amount.touched &&
+          transactionForm.controls.amount.invalid
+        "
+      >
+        <span *ngIf="transactionForm.controls.amount.errors?.['required']">
+          Amount is required
+        </span>
+        <span *ngIf="transactionForm.controls.amount.errors?.['min']">
+          Amount must be greater than 0
+        </span>
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="trCategoryId">Category</label>
       <select id="trCategoryId" formControlName="categoryId">
         <option value="">Select</option>
@@ -47,17 +72,40 @@
           {{ category.name }}
         </option>
       </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          transactionForm.controls.categoryId.touched &&
+          transactionForm.controls.categoryId.invalid
+        "
+      >
+        <span *ngIf="transactionForm.controls.categoryId.errors?.['required']">
+          Category is required
+        </span>
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="trTransactionDate">Transaction date</label>
       <input
         type="date"
         id="trTransactionDate"
         formControlName="transactionDate"
       />
+      <div
+        class="text-danger"
+        *ngIf="
+          transactionForm.controls.transactionDate.touched &&
+          transactionForm.controls.transactionDate.invalid
+        "
+      >
+        <span *ngIf="transactionForm.controls.title.errors?.['required']">
+          Transaction date is required
+        </span>
+      </div>
     </div>
-    <button type="submit" class="primary" [disabled]="transactionForm.invalid">
+
+    <button type="submit" class="primary" [disabled]="isSaveLoading">
       {{ isEdit ? "Update" : "Add" }}
     </button>
     <button type="button" class="secondary" (click)="abort.emit()">

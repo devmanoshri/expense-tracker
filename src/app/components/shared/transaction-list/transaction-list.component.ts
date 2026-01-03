@@ -12,7 +12,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Observable, throttleTime } from 'rxjs';
+import { catchError, delay, Observable, of, take, throttleTime } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
 import { SortTransactionPipe } from '../../../pipes/sort-transaction.pipe';
@@ -21,6 +21,7 @@ import { TransactionStoreService } from '../../../services/transaction-store.ser
 import { TransactionService } from '../../../services/transaction.service';
 import { ModalComponent } from '../modal/modal.component';
 import { TransactionAddEditComponent } from '../transaction-add-edit/transaction-add-edit.component';
+import { MessageService } from '../message/message.service';
 
 interface SelectSort {
   label: string;
@@ -55,6 +56,7 @@ export class TransactionListComponent
   @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable;
 
   private readonly changeDetection = inject(ChangeDetectorRef);
+  private readonly messageService = inject(MessageService);
 
   sortTitle: string = '';
   showModal = false;
@@ -90,6 +92,10 @@ export class TransactionListComponent
   private categoryStoreServices = inject(CategoryStoreService);
   private transactionStoreServices = inject(TransactionStoreService);
   private transactionService = inject(TransactionService);
+  isTransactionLoading$ = this.transactionStoreServices.transactionIsLoading$;
+  isTransactionError$ = this.transactionStoreServices.transactionHasError$;
+  isTransactionDeleting = false;
+  hasTransactionDeleteError = false;
 
   constructor() {
     this.sortSelect = new FormControl(null);
@@ -109,6 +115,15 @@ export class TransactionListComponent
     this.categoryStoreServices.initCategory();
     this.sortSelect.valueChanges.subscribe((value) => (this.sortBy = value));
     this.categories$ = this.categoryStoreServices.categories$;
+
+    this.isTransactionError$.subscribe((errorMsg) => {
+      if (errorMsg === true) {
+        this.messageService.messsage$ = {
+          text: 'Server error! No data found.',
+          type: 'danger',
+        };
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -134,9 +149,37 @@ export class TransactionListComponent
   }
 
   onDeleteConfirmation(): void {
+    if(this.isTransactionDeleting){
+      return;
+    }
+    this.isTransactionDeleting = true; 
+    this.hasTransactionDeleteError = false;
     this.transactionService
       .deleteTransaction(this.selectedTransactionId)
-      .subscribe(() => this.transactionStoreServices.initTransaction(true));
+      .pipe(
+        take(1),
+        delay(3000),
+        catchError(() => {
+          this.hasTransactionDeleteError = true;
+          this.messageService.messsage$ = {
+            text: 'Transaction deletion error occurrd!',
+            type: 'danger',
+          };
+          return of(null);
+        }),
+      )
+      .subscribe(() => {
+        this.isTransactionDeleting = false;
+        if (this.hasTransactionDeleteError) {
+          return;
+        }
+        this.transactionStoreServices.initTransaction(true);
+        this.showConfirmationModal = false;
+        this.messageService.messsage$ = {
+          text: 'Transaction deleted successfully',
+          type: 'success',
+        };
+      });
   }
 
   onDeleteClick(selectedTransactionId: string): void {

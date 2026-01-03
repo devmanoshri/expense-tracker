@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-modal',
-  imports: [],
+  imports: [A11yModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })

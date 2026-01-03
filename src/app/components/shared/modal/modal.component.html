@@ -1,8 +1,18 @@
-<div class="modal-background">
-  <div class="modal">
+<div [tabIndex]="0" class="modal-background" (click)="modalClose.emit()">
+  <div
+    class="modal"
+    cdkTrapFocus
+    (click)="$event.stopPropagation()"
+    (keyup.esc)="modalClose.emit()"
+  >
     <div class="header">
       <h2>{{ header }}</h2>
-      <a href="#" class="close" (click)="$event.preventDefault(); modalClose.emit()"><i class="bi bi-x-circle fs-3"></i></a>
+      <a
+        href="#"
+        class="link-secondary"
+        (click)="$event.preventDefault(); modalClose.emit()"
+        ><i class="bi bi-x-circle fs-3"></i
+      ></a>
     </div>
     <div class="modal-content">
       <ng-content></ng-content>

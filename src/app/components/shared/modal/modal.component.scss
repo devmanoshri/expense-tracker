@@ -22,20 +22,7 @@
     padding-bottom: 16px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--color-light-grey);
-
-    .close {
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--color-brunt-rose);
-
-      &:hover {
-        color: var(--color-coral);
-      }
-    }
+    border-bottom: 1px solid var(--et-light-grey);
   }
   .modal-content {
     padding: 24px;

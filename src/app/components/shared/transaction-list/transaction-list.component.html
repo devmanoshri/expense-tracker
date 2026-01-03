@@ -1,32 +1,50 @@
 <div class="transaction-list-contaier">
   <div class="list-header flex-content">
     <h2>{{ sortTitle }}</h2>
-    @if (showSorting) {
-      <div class="list-sort-wrapper">
-        <button class="primary" (click)="onAddOrEditClick()">
-          + Add new transaction
-        </button>
-      </div>
-    }
-  </div>
-
-  <div class="flex-content">
-    <p>
-      Showing {{ visibleTransactionCount }} of
-      {{ totalTransactionCount }} transations
-    </p>
-    <div class="inline-form-group">
-      <select name="list-sort" aria-label="Sort by" [formControl]="sortSelect">
-        <option [ngValue]="null">Sort by</option>
-        @for (item of selectSortObject; track $index) {
-          <option [ngValue]="item.value">{{ item.label }}</option>
-        }
-      </select>
+    <div class="list-sort-wrapper">
+      <button class="primary" (click)="onAddOrEditClick()">
+        + Add new transaction
+      </button>
     </div>
   </div>
+
+  @let isTransactionLoading = (isTransactionLoading$ | async) === true;
+
+  @if (isTransactionLoading) {
+    <div class="d-flex justify-content-center text-primary mb-3">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else {
+    @if ((isTransactionError$ | async) === true) {
+      <p class="text-danger">Server error! No data found.</p>
+    } @else {
+      <div class="flex-content">
+        @if (showSorting) {
+          <p>
+            Showing {{ visibleTransactionCount }} of
+            {{ totalTransactionCount }} transations
+          </p>
+        }
+
+        <div class="inline-form-group">
+          <select
+            name="list-sort"
+            aria-label="Sort by"
+            [formControl]="sortSelect"
+          >
+            <option [ngValue]="null">Sort by</option>
+            @for (item of selectSortObject; track $index) {
+              <option [ngValue]="item.value">{{ item.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    }
+  }
   @let transactionList =
     transactions | sortTransaction: sortBy?.orderBy : sortBy?.sortOrder;
-
   <div cdkScrollable class="scroll-container">
     <ul class="transaction-list">
       @for (
@@ -99,8 +117,8 @@
 @if (showConfirmationModal) {
   <app-modal header="Please Confirm" (modalClose)="onDeleteCancel()">
     <p>Are you sure you want to delete this transaction?</p>
-    <button class="primary" (click)="onDeleteConfirmation()">Yes</button>
-    <button class="secondary" (click)="onDeleteCancel()" type="button">
+    <button class="primary" (click)="onDeleteConfirmation()" [disabled]="isTransactionDeleting">Yes</button>
+    <button class="secondary" (click)="onDeleteCancel()" type="button" [disabled]="isTransactionDeleting">
       No
     </button>
   </app-modal>

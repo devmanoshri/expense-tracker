@@ -6,21 +6,22 @@
         <div class="radio-group mb-2">
           <label>Transaction type</label>
           <div class="inline-form-group">
-            <input
-              type="radio"
-              value="income"
-              id=""
-              formControlName="transactionType"
-            />
-            <label> Income</label>
+            <label class="d-flex gap-2">
+              <input
+                type="radio"
+                value="income"
+                formControlName="transactionType"
+              />Income</label
+            >
           </div>
           <div class="inline-form-group">
-            <input
-              type="radio"
-              value="expense"
-              formControlName="transactionType"
-            />
-            <label>Expense</label>
+            <label class="d-flex gap-2">
+              <input
+                type="radio"
+                value="expense"
+                formControlName="transactionType"
+              />Expense</label
+            >
           </div>
         </div>
         <div class="form-group mb-3">
@@ -44,7 +45,7 @@
             <label for="fromDate">From</label>
             <input type="date" id="fromDate" formControlName="fromDate" />
           </div>
-          <div class="inline-form-group ">
+          <div class="inline-form-group">
             <label for="toDate">To</label>
             <input type="date" id="toDate" formControlName="toDate" />
           </div>

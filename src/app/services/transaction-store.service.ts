@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
-  finalize,
+  delay,
   Observable,
   of,
-  take,
+  take
 } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
 import { TransactionService } from './transaction.service';
@@ -32,15 +32,14 @@ export class TransactionStoreService {
       .getTransactions()
       .pipe(
         take(1),
+        delay(1000),
         catchError(() => {
           this._transactionHasError$.next(true);
           return of([]);
         }),
-        finalize(() => {
-          this._transactionIsLoading$.next(false);
-        }),
       )
       .subscribe((transactions) => {
+        this._transactionIsLoading$.next(false);
         this._transactions$.next(transactions);
       });
   }

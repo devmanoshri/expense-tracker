@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import {
   Transaction,
@@ -23,6 +23,7 @@ import { FilterCategoryPipe } from '../../../pipes/filter-category.pipe';
 import { CategoryStoreService } from '../../../services/category-store.service';
 import { TransactionStoreService } from '../../../services/transaction-store.service';
 import { TransactionService } from '../../../services/transaction.service';
+import { MessageService } from '../message/message.service';
 
 @Component({
   selector: 'app-transaction-add-edit',
@@ -45,12 +46,17 @@ export class TransactionAddEditComponent implements OnInit {
   private transactionStoreServices = inject(TransactionStoreService);
   private transactionService = inject(TransactionService);
   private formBuilder = inject(FormBuilder);
+  private messageService = inject(MessageService);
+  isTransactionError$ = this.transactionStoreServices.transactionHasError$;
+
+  isSaveLoading = false;
+  hasSaveError = false;
 
   transactionForm = this.formBuilder.nonNullable.group({
     transactionType: ['income' as TransactionType, Validators.required],
     title: ['', Validators.required],
     amount: [0, [Validators.required, Validators.min(1)]],
-    categoryId: [''],
+    categoryId: ['', Validators.required],
     transactionDate: ['', Validators.required],
   });
 
@@ -79,7 +85,11 @@ export class TransactionAddEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.isSaveLoading) {
+      return;
+    }
     if (this.transactionForm.invalid) {
+      this.transactionForm.markAllAsTouched();
       return;
     }
     const formValue = this.transactionForm.value;
@@ -91,20 +101,39 @@ export class TransactionAddEditComponent implements OnInit {
       date: formValue.transactionDate,
     });
 
-    this.isEdit ? this.updateTransaction(data) : this.addTransaction(data);
+    this.saveTransaction(data, this.isEdit);
+
+    // this.isEdit ? this.updateTransaction(data) : this.addTransaction(data);
   }
 
-  private updateTransaction(data: Transaction): void {
-    this.transactionService.updateTransaction(data).subscribe(() => {
-      alert('Transaction updated successfully!');
-      this.transactionStoreServices.initTransaction(true);
-    });
-  }
+  private saveTransaction(data: Transaction, isEdit: boolean): void {
+    this.isSaveLoading = true;
+    this.hasSaveError = false;
 
-  private addTransaction(data: Transaction): void {
-    this.transactionService.addTransaction(data).subscribe(() => {
-      alert('Transaction added seccessfully!');
-      this.transactionStoreServices.initTransaction(true);
-    });
+    this.transactionService
+      .saveTransaction(data, isEdit ? 'update' : 'add')
+      .pipe(
+        delay(1000),
+        catchError(() => {
+          this.hasSaveError = true;
+          this.messageService.messsage$ = {
+            text: 'Transaction update error occurred!',
+            type: 'danger',
+          };
+          return of({} as Transaction);
+        }),
+      )
+      .subscribe(() => {
+        this.isSaveLoading = false;
+        if (this.hasSaveError) {
+          return;
+        }
+        this.messageService.messsage$ = {
+          text: 'Transaction updated successfully!',
+          type: 'success',
+        };
+        this.transactionStoreServices.initTransaction(true);
+        this.abort.emit();
+      });
   }
 }

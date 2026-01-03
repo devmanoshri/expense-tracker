@@ -6,20 +6,20 @@
 }
 
 .card {
-  background: var(--color-white);
+  background: var(--et-white);
   padding: 1rem;
   border-radius: var(--container-border-radius);
   text-align: center;
 }
 
 .income {
-  color: var(--color-amber);
+  color: var(--et-amber);
 }
 
 .expense {
-  color: var(--color-coral);
+  color: var(--et-coral);
 }
 
 .balance {
-  color: var(--color-aqua);
+  color: var(--et-aqua);
 }
