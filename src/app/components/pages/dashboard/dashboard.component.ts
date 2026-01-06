@@ -42,11 +42,9 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.categoryStoreServices.initCategory();
     this.categories$ = this.categoryStoreServices.categories$;
+
     this.transactionStoreServices.initTransaction();
     this.transactions$ = this.transactionStoreServices.transactions$;
-    this.transactions$.subscribe(
-      (transactions) => (this.selectedTransactions = transactions),
-    );
   }
 
   onTransactionsChange(transactions: Transaction[]) {

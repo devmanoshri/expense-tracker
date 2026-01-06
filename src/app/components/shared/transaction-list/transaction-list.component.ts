@@ -52,6 +52,7 @@ export class TransactionListComponent
 {
   @Input() transactions: Transaction[] = [];
   @Input() showSorting = true;
+  @Input() mainCategoryList: Category[] = [];
 
   @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable;
 
@@ -89,7 +90,7 @@ export class TransactionListComponent
   visibleTransactions: Transaction[] = [];
   totalTransactionCount = 0;
 
-  private categoryStoreServices = inject(CategoryStoreService);
+  //private categoryStoreServices = inject(CategoryStoreService);
   private transactionStoreServices = inject(TransactionStoreService);
   private transactionService = inject(TransactionService);
   isTransactionLoading$ = this.transactionStoreServices.transactionIsLoading$;
@@ -112,9 +113,9 @@ export class TransactionListComponent
     this.sortTitle = this.showSorting
       ? 'Transaction List'
       : 'Latest Transactions';
-    this.categoryStoreServices.initCategory();
+    //this.categoryStoreServices.initCategory();
     this.sortSelect.valueChanges.subscribe((value) => (this.sortBy = value));
-    this.categories$ = this.categoryStoreServices.categories$;
+    //this.categories$ = this.categoryStoreServices.categories$;
 
     this.isTransactionError$.subscribe((errorMsg) => {
       if (errorMsg === true) {
@@ -144,15 +145,18 @@ export class TransactionListComponent
       });
   }
 
-  getCategoryName(id?: string): string {
-    return this.categoryStoreServices.getCategoryNameById(id);
+  getCategoryName(catId: string): string {
+    return (
+      this.mainCategoryList.find((category) => category.id === catId)?.name ||
+      'Unknown'
+    );
   }
 
   onDeleteConfirmation(): void {
-    if(this.isTransactionDeleting){
+    if (this.isTransactionDeleting) {
       return;
     }
-    this.isTransactionDeleting = true; 
+    this.isTransactionDeleting = true;
     this.hasTransactionDeleteError = false;
     this.transactionService
       .deleteTransaction(this.selectedTransactionId)

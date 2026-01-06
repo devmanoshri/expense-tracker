@@ -1,8 +1,13 @@
+@let transactions = (transactions$ | async) || [];
+@let allCategories = (categories$ | async) || [];
+
 <div class="chart-wrapper">
   <app-transaction-summary
     [selectedTransactions]="transactionsChangeFromChart"
   ></app-transaction-summary>
   <app-transaction-chart
     (transactionsChange)="onTransactionsChange($event)"
+    [mainTransactionList]="transactions"
+    [mainCategoryList]="allCategories"
   ></app-transaction-chart>
 </div>
