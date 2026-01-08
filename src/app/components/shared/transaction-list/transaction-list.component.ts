@@ -4,29 +4,38 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
-  inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { catchError, delay, Observable, of, take, throttleTime } from 'rxjs';
+import {
+  catchError,
+  delay,
+  Observable,
+  of,
+  Subscription,
+  take,
+  throttleTime
+} from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
 import { SortTransactionPipe } from '../../../pipes/sort-transaction.pipe';
-import { CategoryStoreService } from '../../../services/category-store.service';
 import { TransactionStoreService } from '../../../services/transaction-store.service';
 import { TransactionService } from '../../../services/transaction.service';
+import { MessageService } from '../message/message.service';
 import { ModalComponent } from '../modal/modal.component';
 import { TransactionAddEditComponent } from '../transaction-add-edit/transaction-add-edit.component';
-import { MessageService } from '../message/message.service';
 
 interface SelectSort {
   label: string;
   value: SortBy;
 }
+
 interface SortBy {
   orderBy: keyof Transaction;
   sortOrder: 'asc' | 'desc';
@@ -48,7 +57,7 @@ interface SortBy {
   styleUrls: ['./transaction-list.component.scss'],
 })
 export class TransactionListComponent
-  implements OnInit, OnChanges, AfterViewInit
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
   @Input() transactions: Transaction[] = [];
   @Input() showSorting = true;
@@ -90,13 +99,17 @@ export class TransactionListComponent
   visibleTransactions: Transaction[] = [];
   totalTransactionCount = 0;
 
-  //private categoryStoreServices = inject(CategoryStoreService);
   private transactionStoreServices = inject(TransactionStoreService);
   private transactionService = inject(TransactionService);
   isTransactionLoading$ = this.transactionStoreServices.transactionIsLoading$;
   isTransactionError$ = this.transactionStoreServices.transactionHasError$;
   isTransactionDeleting = false;
   hasTransactionDeleteError = false;
+
+  private sortSubscription!: Subscription;
+  private transactionErrorSubscription!: Subscription;
+  private scrollSubscription!: Subscription;
+  private deleteTransactionSubscription!: Subscription;
 
   constructor() {
     this.sortSelect = new FormControl(null);
@@ -113,29 +126,31 @@ export class TransactionListComponent
     this.sortTitle = this.showSorting
       ? 'Transaction List'
       : 'Latest Transactions';
-    //this.categoryStoreServices.initCategory();
-    this.sortSelect.valueChanges.subscribe((value) => (this.sortBy = value));
-    //this.categories$ = this.categoryStoreServices.categories$;
 
-    this.isTransactionError$.subscribe((errorMsg) => {
-      if (errorMsg === true) {
-        this.messageService.messsage$ = {
-          text: 'Server error! No data found.',
-          type: 'danger',
-        };
-      }
-    });
+    this.sortSubscription = this.sortSelect.valueChanges.subscribe(
+      (value) => (this.sortBy = value),
+    );
+
+    this.transactionErrorSubscription = this.isTransactionError$.subscribe(
+      (errorMsg) => {
+        if (errorMsg === true) {
+          this.messageService.messsage$ = {
+            text: 'Server error! No data found.',
+            type: 'danger',
+          };
+        }
+      },
+    );
   }
 
   ngAfterViewInit(): void {
-    this.scrollable
+    this.scrollSubscription = this.scrollable
       .elementScrolled()
       .pipe(throttleTime(200))
       .subscribe(() => {
         const element = this.scrollable.getElementRef().nativeElement;
         const atBottom =
           element.scrollHeight - element.scrollTop < element.clientHeight + 50;
-        //console.log(atBottom);
         setTimeout(() => {
           if (atBottom && this.hasMore) {
             this.showMore();
@@ -158,7 +173,7 @@ export class TransactionListComponent
     }
     this.isTransactionDeleting = true;
     this.hasTransactionDeleteError = false;
-    this.transactionService
+    this.deleteTransactionSubscription = this.transactionService
       .deleteTransaction(this.selectedTransactionId)
       .pipe(
         take(1),
@@ -218,5 +233,12 @@ export class TransactionListComponent
   get hasMore() {
     if (!this.transactions) return;
     return this.visibleTransactionCount < this.transactions.length;
+  }
+
+  ngOnDestroy(): void {
+    this.sortSubscription.unsubscribe();
+    this.transactionErrorSubscription.unsubscribe();
+    this.scrollSubscription.unsubscribe();
+    this.deleteTransactionSubscription.unsubscribe();
   }
 }
