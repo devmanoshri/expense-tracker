@@ -20,17 +20,16 @@
         formControlName="title"
         placeholder="Title"
       />
-      <div
-        class="text-danger"
-        *ngIf="
-          transactionForm.controls.title.touched &&
-          transactionForm.controls.title.invalid
-        "
-      >
-        <span *ngIf="transactionForm.controls.title.errors?.['required']">
-          Title is required
-        </span>
-      </div>
+      @if (
+        transactionForm.controls.title.touched &&
+        transactionForm.controls.title.invalid
+      ) {
+        <div class="text-danger">
+          @if (transactionForm.controls.title.errors?.["required"]) {
+            <span> Title is required </span>
+          }
+        </div>
+      }
     </div>
     <div class="form-group mb-3">
       <label for="trAmount">Amount</label>
@@ -40,49 +39,47 @@
         formControlName="amount"
         placeholder="Amount"
       />
-      <div
-        class="text-danger"
-        *ngIf="
-          transactionForm.controls.amount.touched &&
-          transactionForm.controls.amount.invalid
-        "
-      >
-        <span *ngIf="transactionForm.controls.amount.errors?.['required']">
-          Amount is required
-        </span>
-        <span *ngIf="transactionForm.controls.amount.errors?.['min']">
-          Amount must be greater than 0
-        </span>
-      </div>
+      @if (
+        transactionForm.controls.amount.touched &&
+        transactionForm.controls.amount.invalid
+      ) {
+        <div class="text-danger">
+          @if (transactionForm.controls.amount.errors?.["required"]) {
+            <span> Amount is required </span>
+          }
+          @if (transactionForm.controls.amount.errors?.["min"]) {
+            <span *ngIf=""> Amount must be greater than 0 </span>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-group mb-3">
       <label for="trCategoryId">Category</label>
       <select id="trCategoryId" formControlName="categoryId">
         <option value="">Select</option>
-        <option
-          *ngFor="
-            let category of categories$
-              | async
-              | filterCategory
-                : transactionForm.get('transactionType')?.value ?? 'income'
-          "
-          [value]="category.id"
-        >
-          {{ category.name }}
-        </option>
+        @for (
+          category of categories$
+            | async
+            | filterCategory
+              : transactionForm.get("transactionType")?.value ?? "income";
+          track $index
+        ) {
+          <option [value]="category.id">
+            {{ category.name }}
+          </option>
+        }
       </select>
-      <div
-        class="text-danger"
-        *ngIf="
-          transactionForm.controls.categoryId.touched &&
-          transactionForm.controls.categoryId.invalid
-        "
-      >
-        <span *ngIf="transactionForm.controls.categoryId.errors?.['required']">
-          Category is required
-        </span>
-      </div>
+      @if (
+        transactionForm.controls.categoryId.touched &&
+        transactionForm.controls.categoryId.invalid
+      ) {
+        <div class="text-danger">
+          @if (transactionForm.controls.categoryId.errors?.["required"]) {
+            <span> Category is required </span>
+          }
+        </div>
+      }
     </div>
 
     <div class="form-group mb-3">
@@ -92,17 +89,16 @@
         id="trTransactionDate"
         formControlName="transactionDate"
       />
-      <div
-        class="text-danger"
-        *ngIf="
-          transactionForm.controls.transactionDate.touched &&
-          transactionForm.controls.transactionDate.invalid
-        "
-      >
-        <span *ngIf="transactionForm.controls.title.errors?.['required']">
-          Transaction date is required
-        </span>
-      </div>
+      @if (
+        transactionForm.controls.transactionDate.touched &&
+        transactionForm.controls.transactionDate.invalid
+      ) {
+        <div class="text-danger">
+          @if (transactionForm.controls.title.errors?.["required"]) {
+            <span> Transaction date is required </span>
+          }
+        </div>
+      }
     </div>
 
     <button type="submit" class="primary" [disabled]="isSaveLoading">
