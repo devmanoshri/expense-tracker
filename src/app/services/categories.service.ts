@@ -16,15 +16,4 @@ export class CategoriesService {
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl);
   }
-
-  loadCategories() {
-    this.getCategories().subscribe((categories) => {
-      this.categories = categories;
-    });
-  }
-
-  // getCategoryName(catId: string): string {
-  //   const category = this.categories.find(category => category.id === catId);
-  //   return category ? category.name : 'Unknown';
-  // }
 }
