@@ -20,7 +20,7 @@ import {
   of,
   Subscription,
   take,
-  throttleTime
+  throttleTime,
 } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
@@ -106,10 +106,7 @@ export class TransactionListComponent
   isTransactionDeleting = false;
   hasTransactionDeleteError = false;
 
-  private sortSubscription!: Subscription;
-  private transactionErrorSubscription!: Subscription;
-  private scrollSubscription!: Subscription;
-  private deleteTransactionSubscription!: Subscription;
+  private subscription = new Subscription();
 
   constructor() {
     this.sortSelect = new FormControl(null);
@@ -127,37 +124,39 @@ export class TransactionListComponent
       ? 'Transaction List'
       : 'Latest Transactions';
 
-    this.sortSubscription = this.sortSelect.valueChanges.subscribe(
-      (value) => (this.sortBy = value),
+    this.subscription.add(
+      this.sortSelect.valueChanges.subscribe((value) => (this.sortBy = value)),
     );
-
-    this.transactionErrorSubscription = this.isTransactionError$.subscribe(
-      (errorMsg) => {
+    this.subscription.add(
+      this.isTransactionError$.subscribe((errorMsg) => {
         if (errorMsg === true) {
           this.messageService.messsage$ = {
             text: 'Server error! No data found.',
             type: 'danger',
           };
         }
-      },
+      }),
     );
   }
 
   ngAfterViewInit(): void {
-    this.scrollSubscription = this.scrollable
-      .elementScrolled()
-      .pipe(throttleTime(200))
-      .subscribe(() => {
-        const element = this.scrollable.getElementRef().nativeElement;
-        const atBottom =
-          element.scrollHeight - element.scrollTop < element.clientHeight + 50;
-        setTimeout(() => {
-          if (atBottom && this.hasMore) {
-            this.showMore();
-            this.changeDetection.markForCheck();
-          }
-        });
-      });
+    this.subscription.add(
+      this.scrollable
+        .elementScrolled()
+        .pipe(throttleTime(200))
+        .subscribe(() => {
+          const element = this.scrollable.getElementRef().nativeElement;
+          const atBottom =
+            element.scrollHeight - element.scrollTop <
+            element.clientHeight + 50;
+          setTimeout(() => {
+            if (atBottom && this.hasMore) {
+              this.showMore();
+              this.changeDetection.markForCheck();
+            }
+          });
+        }),
+    );
   }
 
   getCategoryName(catId: string): string {
@@ -173,32 +172,35 @@ export class TransactionListComponent
     }
     this.isTransactionDeleting = true;
     this.hasTransactionDeleteError = false;
-    this.deleteTransactionSubscription = this.transactionService
-      .deleteTransaction(this.selectedTransactionId)
-      .pipe(
-        take(1),
-        delay(3000),
-        catchError(() => {
-          this.hasTransactionDeleteError = true;
+
+    this.subscription.add(
+      this.transactionService
+        .deleteTransaction(this.selectedTransactionId)
+        .pipe(
+          take(1),
+          delay(3000),
+          catchError(() => {
+            this.hasTransactionDeleteError = true;
+            this.messageService.messsage$ = {
+              text: 'Transaction deletion error occurrd!',
+              type: 'danger',
+            };
+            return of(null);
+          }),
+        )
+        .subscribe(() => {
+          this.isTransactionDeleting = false;
+          if (this.hasTransactionDeleteError) {
+            return;
+          }
+          this.transactionStoreServices.initTransaction(true);
+          this.showConfirmationModal = false;
           this.messageService.messsage$ = {
-            text: 'Transaction deletion error occurrd!',
-            type: 'danger',
+            text: 'Transaction deleted successfully',
+            type: 'success',
           };
-          return of(null);
         }),
-      )
-      .subscribe(() => {
-        this.isTransactionDeleting = false;
-        if (this.hasTransactionDeleteError) {
-          return;
-        }
-        this.transactionStoreServices.initTransaction(true);
-        this.showConfirmationModal = false;
-        this.messageService.messsage$ = {
-          text: 'Transaction deleted successfully',
-          type: 'success',
-        };
-      });
+    );
   }
 
   onDeleteClick(selectedTransactionId: string): void {
@@ -236,9 +238,6 @@ export class TransactionListComponent
   }
 
   ngOnDestroy(): void {
-    this.sortSubscription.unsubscribe();
-    this.transactionErrorSubscription.unsubscribe();
-    this.scrollSubscription.unsubscribe();
-    this.deleteTransactionSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

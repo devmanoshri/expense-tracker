@@ -4,6 +4,7 @@ import {
   EventEmitter,
   inject,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -13,7 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { catchError, delay, Observable, of } from 'rxjs';
+import { catchError, delay, Observable, of, Subscription } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import {
   Transaction,
@@ -32,7 +33,7 @@ import { MessageService } from '../message/message.service';
   templateUrl: './transaction-add-edit.component.html',
   styleUrls: ['./transaction-add-edit.component.scss'],
 })
-export class TransactionAddEditComponent implements OnInit {
+export class TransactionAddEditComponent implements OnInit, OnDestroy {
   @Input() transaction = {} as Transaction;
   @Input() isEdit = false;
 
@@ -47,6 +48,8 @@ export class TransactionAddEditComponent implements OnInit {
   private transactionService = inject(TransactionService);
   private formBuilder = inject(FormBuilder);
   private messageService = inject(MessageService);
+  private subscription = new Subscription();
+
   isTransactionError$ = this.transactionStoreServices.transactionHasError$;
 
   isSaveLoading = false;
@@ -110,30 +113,36 @@ export class TransactionAddEditComponent implements OnInit {
     this.isSaveLoading = true;
     this.hasSaveError = false;
 
-    this.transactionService
-      .saveTransaction(data, isEdit ? 'update' : 'add')
-      .pipe(
-        delay(1000),
-        catchError(() => {
-          this.hasSaveError = true;
+    this.subscription.add(
+      this.transactionService
+        .saveTransaction(data, isEdit ? 'update' : 'add')
+        .pipe(
+          delay(1000),
+          catchError(() => {
+            this.hasSaveError = true;
+            this.messageService.messsage$ = {
+              text: 'Transaction update error occurred!',
+              type: 'danger',
+            };
+            return of({} as Transaction);
+          }),
+        )
+        .subscribe(() => {
+          this.isSaveLoading = false;
+          if (this.hasSaveError) {
+            return;
+          }
           this.messageService.messsage$ = {
-            text: 'Transaction update error occurred!',
-            type: 'danger',
+            text: 'Transaction updated successfully!',
+            type: 'success',
           };
-          return of({} as Transaction);
+          this.transactionStoreServices.initTransaction(true);
+          this.abort.emit();
         }),
-      )
-      .subscribe(() => {
-        this.isSaveLoading = false;
-        if (this.hasSaveError) {
-          return;
-        }
-        this.messageService.messsage$ = {
-          text: 'Transaction updated successfully!',
-          type: 'success',
-        };
-        this.transactionStoreServices.initTransaction(true);
-        this.abort.emit();
-      });
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
