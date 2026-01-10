@@ -13,9 +13,19 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      gap:1rem;
+    }
   }
 
   .list-header {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
     .list-sort-wrapper {
       display: flex;
       flex-direction: column;
@@ -37,17 +47,27 @@
     li {
       border-radius: var(--container-border-radius);
       padding: 1rem;
-      margin-bottom: 0.7rem;
+      margin: 1rem 1rem 1rem 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      min-width: 200px;
 
-      @media screen and (max-width: 768px) {
+      .info {
+        display: flex;
+        gap: 0.5rem;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+        }
+      }
+
+      @media screen and (max-width: 1300px) {
         flex-direction: column;
         gap: 0.5rem;
 
         .item-name {
-          margin-bottom: 0.75rem;
+          //margin-bottom: 0.75rem;
           text-align: center;
         }
 

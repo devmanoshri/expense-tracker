@@ -1,15 +1,15 @@
-:host {
-  display: block;
-  padding: 2rem;
-  background: #f5f7fa;
-}
+// :host {
+//   display: block;
+//   padding: 2rem;
+//   background: #f5f7fa;
+// }
 
 .transaction-wrapper {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 32px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1200px) {
      grid-template-columns: 1fr;
   }
 }

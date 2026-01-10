@@ -7,9 +7,12 @@ button {
   padding: 0 16px;
   transition: all 0.2s ease;
   font-size: 1.125rem;
+  max-width: fit-content;
 
   @media screen and (max-width: 768px) {
-    padding: 0.5rem;
+    // padding: 0.5rem;
+    line-height: 0;
+    font-size: 16px;
   }
 }
 
@@ -32,7 +35,7 @@ button + button {
   margin-left: 16px;
 }
 
-button:disabled{
+button:disabled {
   background-color: var(--et-light-grey);
 }
 
@@ -45,6 +48,11 @@ select {
   font-size: 1.125rem;
   line-height: 1.2;
   width: min(450px, 100%);
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    height: 30px;
+    padding: 0 8px;
+  }
 }
 
 input:invalid,
@@ -56,6 +64,12 @@ select:invalid {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+label {
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .form-group {
