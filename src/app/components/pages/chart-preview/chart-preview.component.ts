@@ -10,11 +10,7 @@ import { TransactionSummaryComponent } from './transaction-summary/transaction-s
 
 @Component({
   selector: 'app-chart-preview',
-  imports: [
-    TransactionChartComponent,
-    TransactionSummaryComponent,
-    AsyncPipe,
-  ],
+  imports: [TransactionChartComponent, TransactionSummaryComponent, AsyncPipe],
   templateUrl: './chart-preview.component.html',
   styleUrl: './chart-preview.component.scss',
 })
@@ -27,16 +23,15 @@ export class ChartPreviewComponent implements OnInit {
 
   transactionsChangeFromChart: Transaction[] = [];
 
-
   ngOnInit(): void {
     this.categoryStoreService.initCategory();
-    this.categories$ = this.categoryStoreService.categories$;
-
     this.transactionStoreService.initTransaction();
+
+    this.categories$ = this.categoryStoreService.categories$;
     this.transactions$ = this.transactionStoreService.transactions$;
   }
 
   onTransactionsChange(transactions: Transaction[]) {
-    this.transactionsChangeFromChart = transactions;
+    setTimeout(() => (this.transactionsChangeFromChart = transactions), 1000);
   }
 }

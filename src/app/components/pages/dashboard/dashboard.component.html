@@ -6,7 +6,6 @@
 
 @let allCategories = (categories$ | async) || [];
 
-
 <div class="transaction-wrapper">
   <div class="transaction-details">
     <app-transaction-list
@@ -20,9 +19,10 @@
       [selectedTransactions]="transactionsChangeFromChart"
     ></app-transaction-summary>
     <app-transaction-chart
-      (transactionsChange)="onTransactionsChange($event)" 
+      (transactionsChange)="onTransactionsChange($event)"
       [mainTransactionList]="transactions"
       [mainCategoryList]="allCategories"
+      chartType="doughnut"
     ></app-transaction-chart>
   </div>
 </div>

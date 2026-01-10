@@ -8,7 +8,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { Category } from '../../../models/category.model';
@@ -24,6 +24,7 @@ import { Transaction } from '../../../models/transaction.model';
 export class TransactionChartComponent implements AfterViewInit, OnChanges {
   @Input() mainTransactionList: Transaction[] = [];
   @Input() mainCategoryList: Category[] = [];
+  @Input() chartType: 'bar' | 'doughnut' = 'bar';
 
   allTransactions: Transaction[] = [];
   transactions: Transaction[] = [];
@@ -55,7 +56,7 @@ export class TransactionChartComponent implements AfterViewInit, OnChanges {
       'Unknown'
     );
   }
-  
+
   onChooseDateRange(
     range: 'currentmonth' | 'last3' | 'last6' | 'last12' | 'all',
   ) {
@@ -99,11 +100,16 @@ export class TransactionChartComponent implements AfterViewInit, OnChanges {
   }
 
   private renderChart(): void {
-    if (!this.canvas || !this.viewReady || this.transactions.length === 0)
+    if (!this.canvas || !this.viewReady || this.transactions.length === 0) {
       return;
+    }
 
     const ctx = this.canvas.nativeElement.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
+
+    if (this.chart) this.chart.destroy();
 
     // Group by type and category
     const incomeMap = new Map<string, number>();
@@ -125,31 +131,55 @@ export class TransactionChartComponent implements AfterViewInit, OnChanges {
     const expenseLabels = Array.from(expenseMap.keys());
     const expenseData = Array.from(expenseMap.values());
 
-    // Generate colors for each category slice
-    const generateColors = (n: number, baseColor: string) =>
-      Array.from({ length: n }, (_, i) => `hsl(${(i * 360) / n}, 70%, 50%)`);
+    const incomeColors = this.generateVariations(
+      incomeLabels.length,
+      '#d1d646',
+    );
+    const expenseColors = this.generateVariations(
+      expenseLabels.length,
+      '#f97068',
+    );
 
-    const incomeColors = generateColors(incomeLabels.length, '#16a34a');
-    const expenseColors = generateColors(expenseLabels.length, '#dc2626');
-
-    if (this.chart) this.chart.destroy();
+    const allLabels = [...incomeLabels, ...expenseLabels];
+    const allData = [...incomeData, ...expenseData];
+    const allColors = [...incomeColors, ...expenseColors];
 
     this.chart = new Chart(ctx, {
-      type: 'doughnut',
+      type: this.chartType,
       data: {
-        labels: [...incomeLabels, ...expenseLabels],
+        labels: allLabels,
         datasets: [
           {
-            data: [...incomeData, ...expenseData],
-            backgroundColor: [...incomeColors, ...expenseColors],
+            data: allData,
+            backgroundColor: allColors,
           },
         ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } },
+        plugins: {
+          legend: { position: 'bottom', display: this.chartType !== 'bar' },
+        },
       },
     });
+  }
+
+  generateVariations(n: number, hex: string) {
+    const hexWithOutHash = hex?.replace('#', '');
+    const rgbPieces = hexWithOutHash.match(/.{2}/g);
+    const rgb = (rgbPieces ?? []).map((rgbPiece) => parseInt(rgbPiece, 16));
+
+    const variations = [];
+
+    for (let i = 0; i < n; i++) {
+      const factor = 0.7 + (i / n) * 0.6; // generate light to dark variations
+      const newRgb = rgb.map((v) => Math.min(255, Math.round(v * factor)));
+      const newHex =
+        '#' + newRgb.map((c) => c.toString(16).padStart(2, '0')).join('');
+      variations.push(newHex);
+    }
+
+    return variations;
   }
 }
