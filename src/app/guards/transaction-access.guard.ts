@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { MessageService } from '../../shared/message/message.service';
+import { MessageService } from '../components/shared/message/message.service';
 
 export const transactionAccessGuard: CanActivateFn = (route, state) => {
   const messageService = inject(MessageService);
