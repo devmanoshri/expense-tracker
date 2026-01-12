@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
+import { transactionsResolver } from './components/pages/manage-transaction/transactions.resolver';
+import { ManageTransactionComponent } from './components/pages/manage-transaction/manage-transaction.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,9 @@ export const routes: Routes = [
   },
   {
     path: 'manage-transaction',
+    resolve: {
+      transactions: transactionsResolver,
+    },
     loadComponent: () => {
       return import('./components/pages/manage-transaction/manage-transaction.component').then(
         (m) => m.ManageTransactionComponent,

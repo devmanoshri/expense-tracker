@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
 import { FilterTransactionPipe } from '../../../pipes/filter-transaction.pipe';
@@ -9,6 +9,7 @@ import { CategoryStoreService } from '../../../services/category-store.service';
 import { TransactionStoreService } from '../../../services/transaction-store.service';
 import { TransactionListComponent } from '../../shared/transaction-list/transaction-list.component';
 import { TransactionFilterComponent } from './transaction-filter/transaction-filter.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-transaction',
@@ -22,12 +23,11 @@ import { TransactionFilterComponent } from './transaction-filter/transaction-fil
   templateUrl: './manage-transaction.component.html',
   styleUrl: './manage-transaction.component.scss',
 })
-export class ManageTransactionComponent implements OnInit, OnDestroy {
-  
-  private transactionStoreServices = inject(TransactionStoreService);
+export class ManageTransactionComponent implements OnInit {
+  // private transactionStoreServices = inject(TransactionStoreService);
   private categoryStoreServices = inject(CategoryStoreService);
-  
-  private transactionSub!: Subscription;
+  private route = inject(ActivatedRoute);
+
   transactions$!: Observable<Transaction[]>;
   categories$!: Observable<Category[]>;
   selectedTransactions: Transaction[] | undefined;
@@ -41,13 +41,11 @@ export class ManageTransactionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.categoryStoreServices.initCategory();
     this.categories$ = this.categoryStoreServices.categories$;
-    this.transactionStoreServices.initTransaction();
-    this.transactions$ = this.transactionStoreServices.transactions$;
-    this.transactionSub = this.transactions$.subscribe(
-      (transactions) => (this.selectedTransactions = transactions),
+    //this.transactionStoreServices.initTransaction();
+    //this.transactions$ = this.transactionStoreServices.transactions$;
+
+    this.transactions$ = this.route.data.pipe(
+      map((data) => data['transactions'] as Transaction[]),
     );
-  }
-  ngOnDestroy(): void {
-    this.transactionSub.unsubscribe();
   }
 }
