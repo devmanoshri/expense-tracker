@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import localeNb from '@angular/common/locales/nb';
 import {
   ApplicationConfig,
@@ -12,6 +12,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { TransactionStoreService } from './services/transaction-store.service';
 import { CategoryStoreService } from './services/category-store.service';
+import { apiUrlInterceptor } from './interceptors/api-url.interceptor';
 
 registerLocaleData(localeNb);
 
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([apiUrlInterceptor])),
     { provide: LOCALE_ID, useValue: 'nb-NO' },
     provideAppInitializer(() => {
       const transactionStoreService = inject(TransactionStoreService);
