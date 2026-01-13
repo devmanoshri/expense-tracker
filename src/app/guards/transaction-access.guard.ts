@@ -6,16 +6,21 @@ export const transactionAccessGuard: CanActivateFn = (route, state) => {
   const messageService = inject(MessageService);
 
   const router = inject(Router);
-  const authStatus = sessionStorage.getItem('authStatus');
+  const stored = sessionStorage.getItem('authStatus');
 
-  if (authStatus === 'authorise') {
-    return true;
-  } else {
-    messageService.messsage$ = {
-      text: 'Change your authorization status!',
-      type: 'danger',
-    };
-    router.navigate(['/']);
-    return false;
+  if (stored) {
+    const authStatus = JSON.parse(stored);
+
+    if (authStatus.name === 'authorise') {
+      return true;
+    }
   }
+
+  messageService.messsage$ = {
+    text: 'Change your authorization status!',
+    type: 'danger',
+  };
+
+  router.navigate(['/']);
+  return false;
 };
