@@ -30,12 +30,8 @@ export class FilterTransactionPipe implements PipeTransform {
         return false;
       }
 
-      // Filter by category (only for expenses)
-      if (
-        transaction.type === 'expense' &&
-        selectedCategoryId &&
-        transaction.categoryId !== selectedCategoryId
-      ) {
+      // Filter by category
+      if (selectedCategoryId && transaction.categoryId !== selectedCategoryId) {
         return false;
       }
 

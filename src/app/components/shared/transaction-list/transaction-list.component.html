@@ -24,13 +24,9 @@
         @if (showSorting) {
           <p>
             Showing
-            <span class="badge text-bg-info p-1 rounded-1">{{
-              visibleTransactionCount
-            }}</span>
+            {{ visibleTransactionCount }}
             of
-            <span class="badge text-bg-primary p-1 rounded-1">{{
-              totalTransactionCount
-            }}</span>
+            {{ totalTransactionCount }}
             transations
           </p>
         }

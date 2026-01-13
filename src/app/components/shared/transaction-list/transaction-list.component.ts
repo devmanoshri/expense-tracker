@@ -114,8 +114,9 @@ export class TransactionListComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions']) {
-      this.visibleTransactionCount = 10;
       this.totalTransactionCount = this.transactions?.length;
+      this.visibleTransactionCount =
+        this.totalTransactionCount > 10 ? 10 : this.totalTransactionCount;
     }
   }
 

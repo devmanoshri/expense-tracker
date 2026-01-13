@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { map, Observable, Subscription } from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
 import { FilterTransactionPipe } from '../../../pipes/filter-transaction.pipe';
 import { SortTransactionPipe } from '../../../pipes/sort-transaction.pipe';
 import { CategoryStoreService } from '../../../services/category-store.service';
-import { TransactionStoreService } from '../../../services/transaction-store.service';
 import { TransactionListComponent } from '../../shared/transaction-list/transaction-list.component';
 import { TransactionFilterComponent } from './transaction-filter/transaction-filter.component';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-transaction',
