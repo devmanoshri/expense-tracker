@@ -1,15 +1,20 @@
 <div class="auth-status-container mb-4">
+  <label class="fs-4">Select status: </label>
   <form>
-    <label for="authStatus">Authorization Status: </label>
     @for (option of choiceOptions; track $index) {
-      <label>
+      <div class="form-check">
         <input
-          type="radio"
-          name="choice"
+          class="form-check-input"
           [formControl]="choice"
           [value]="option"
-        />{{ option | titlecase}}
-      </label>
+          type="radio"
+          name="choice"
+          id="{{ $index }}"
+        />
+        <label class="form-check-label" for="{{ $index }}">
+          {{ option | titlecase }}
+        </label>
+      </div>
     }
   </form>
 </div>
