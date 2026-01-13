@@ -1,59 +1,69 @@
 <div class="chart-card">
-  <h2>Income vs Expense</h2>
+  <h2 class="mb-3">Income vs Expense</h2>
+
+  <div class="chart-wrapper">
+    <canvas #chartCanvas></canvas>
+  </div>
 
   <div class="chart-range my-4 d-flex column-gap-3 flex-wrap">
-    <label>
+    <div class="form-check">
       <input
+        class="form-check-input"
         type="radio"
         name="chartRange"
         value="currentmonth"
         (change)="onChooseDateRange('currentmonth')"
+        id="currentMonth"
       />
-      Current month
-    </label>
-    <label>
+      <label class="form-check-label" for="currentMonth">Current month</label>
+    </div>
+
+    <div class="form-check">
       <input
+        class="form-check-input"
         type="radio"
         name="chartRange"
         value="last3"
         (change)="onChooseDateRange('last3')"
+        id="3months"
       />
-      Last 3 months
-    </label>
+      <label class="form-check-label" for="3months">Last 3 months</label>
+    </div>
 
-    <label>
+    <div class="form-check">
       <input
+        class="form-check-input"
         type="radio"
         name="chartRange"
         value="last6"
         (change)="onChooseDateRange('last6')"
       />
-      Last 6 months
-    </label>
+      <label class="form-check-label" for="6months">Last 6 months</label>
+    </div>
 
-    <label>
+    <div class="form-check">
       <input
+        class="form-check-input"
         type="radio"
         name="chartRange"
         value="last12"
         (change)="onChooseDateRange('last12')"
+        id="1year"
       />
-      Last 1 year
-    </label>
+      <label class="form-check-label" for="1year">Last 1 year</label>
+    </div>
 
-    <label>
+    <div class="form-check">
       <input
+        class="form-check-input"
         type="radio"
         name="chartRange"
         value="all"
         checked
         (change)="onChooseDateRange('all')"
+        id="all"
       />
-      All
-    </label>
-  </div>
-
-  <div class="chart-wrapper">
-    <canvas #chartCanvas></canvas>
+      <label class="form-check-label" for="all">All</label>
+    </div>
   </div>
 </div>

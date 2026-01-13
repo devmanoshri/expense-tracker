@@ -2,7 +2,7 @@
   <div class="list-header flex-content mt-4">
     <h2>{{ sortTitle }}</h2>
     <div class="list-sort-wrapper">
-      <button class="primary" (click)="onAddOrEditClick()">
+      <button class="btn btn-primary" (click)="onAddOrEditClick()">
         + Add new transaction
       </button>
     </div>
@@ -23,15 +23,23 @@
       <div class="flex-content">
         @if (showSorting) {
           <p>
-            Showing {{ visibleTransactionCount }} of
-            {{ totalTransactionCount }} transations
+            Showing
+            <span class="badge text-bg-info p-1 rounded-1">{{
+              visibleTransactionCount
+            }}</span>
+            of
+            <span class="badge text-bg-primary p-1 rounded-1">{{
+              totalTransactionCount
+            }}</span>
+            transations
           </p>
         }
 
         <div class="inline-form-group">
           <select
+            class="form-select"
+            aria-label="Default select sort-by"
             name="list-sort"
-            aria-label="Sort by"
             [formControl]="sortSelect"
           >
             <option [ngValue]="null">Sort by</option>
@@ -70,19 +78,19 @@
                 {{ getCategoryName(transaction.categoryId) }}
               </small>
             </div>
-            <span> {{ transaction.amount | currency:'NOK':'symbol'}}</span>
+            <span> {{ transaction.amount | currency: "NOK" : "symbol" }}</span>
           </div>
 
           <div class="actions">
             <button
-              class="primary"
+              class="btn btn-primary"
               (click)="onAddOrEditClick(transaction, true)"
               title="Edit"
             >
               <i class="bi bi-pencil"></i>
             </button>
             <button
-              class="secondary"
+              class="btn btn-secondary"
               (click)="onDeleteClick(transaction.id!)"
               type="button"
               title="Delete"
@@ -94,11 +102,11 @@
       }
     </ul>
   </div>
-  <div class="pagination-wrapper">
-    <button class="primary" *ngIf="hasMore" (click)="showMore()">
-      Show more
-    </button>
-  </div>
+  @if (hasMore) {
+    <div class="pagination-wrapper">
+      <button class="btn btn-primary" (click)="showMore()">Show more</button>
+    </div>
+  }
 </div>
 
 @if (showModal) {
@@ -117,8 +125,19 @@
 @if (showConfirmationModal) {
   <app-modal header="Please Confirm" (modalClose)="onDeleteCancel()">
     <p>Are you sure you want to delete this transaction?</p>
-    <button class="primary" (click)="onDeleteConfirmation()" [disabled]="isTransactionDeleting">Yes</button>
-    <button class="secondary" (click)="onDeleteCancel()" type="button" [disabled]="isTransactionDeleting">
+    <button
+      class="primary"
+      (click)="onDeleteConfirmation()"
+      [disabled]="isTransactionDeleting"
+    >
+      Yes
+    </button>
+    <button
+      class="secondary"
+      (click)="onDeleteCancel()"
+      type="button"
+      [disabled]="isTransactionDeleting"
+    >
       No
     </button>
   </app-modal>
