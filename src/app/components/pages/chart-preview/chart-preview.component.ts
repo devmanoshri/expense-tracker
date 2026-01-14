@@ -25,7 +25,7 @@ export class ChartPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryStoreService.initCategory();
-    this.transactionStoreService.initTransaction();
+    this.transactionStoreService.fetchTransaction();
 
     this.categories$ = this.categoryStoreService.categories$;
     this.transactions$ = this.transactionStoreService.transactions$;

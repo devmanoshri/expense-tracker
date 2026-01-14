@@ -66,7 +66,7 @@ export class TransactionAddEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categoryStoreServices.initCategory();
-    this.transactionStoreServices.initTransaction();
+    this.transactionStoreServices.fetchTransaction();
 
     this.transactions$ = this.transactionStoreServices.transactions$;
     this.categories$ = this.categoryStoreServices.categories$;
@@ -140,7 +140,7 @@ export class TransactionAddEditComponent implements OnInit, OnDestroy {
             text: 'Transaction updated successfully!',
             type: 'success',
           };
-          this.transactionStoreServices.initTransaction(true);
+          this.transactionStoreServices.fetchTransaction(true);
           this.abort.emit();
         }),
     );

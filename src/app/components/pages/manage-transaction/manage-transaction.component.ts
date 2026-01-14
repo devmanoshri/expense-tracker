@@ -40,7 +40,7 @@ export class ManageTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.categoryStoreServices.initCategory();
     this.categories$ = this.categoryStoreServices.categories$;
-    //this.transactionStoreServices.initTransaction();
+    //this.transactionStoreServices.fetchTransaction();
     //this.transactions$ = this.transactionStoreServices.transactions$;
 
     this.transactions$ = this.route.data.pipe(

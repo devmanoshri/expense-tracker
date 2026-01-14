@@ -13,7 +13,7 @@ export class TransactionStoreService {
 
   private readonly transationService = inject(TransactionService);
 
-  initTransaction(force = false): void {
+  fetchTransaction(force = false): void {
     if (
       (this._transactions$.getValue().length && !force) ||
       this._transactionIsLoading$.getValue()

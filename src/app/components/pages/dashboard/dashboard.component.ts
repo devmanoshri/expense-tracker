@@ -45,7 +45,7 @@ export class DashboardComponent {
     this.categoryStoreServices.initCategory();
     this.categories$ = this.categoryStoreServices.categories$;
 
-    this.transactionStoreServices.initTransaction();
+    this.transactionStoreServices.fetchTransaction();
     this.transactions$ = this.transactionStoreServices.transactions$;
   }
 

@@ -164,7 +164,7 @@ export class TransactionListComponent implements OnInit, OnChanges, OnDestroy {
           if (this.hasTransactionDeleteError) {
             return;
           }
-          this.transactionStoreServices.initTransaction(true);
+          this.transactionStoreServices.fetchTransaction(true);
           this.showConfirmationModal = false;
           this.messageService.messsage$ = {
             text: 'Transaction deleted successfully',
