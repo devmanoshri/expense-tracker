@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       const categoryStoreService = inject(CategoryStoreService);
       
       transactionStoreService.fetchTransaction();
-      categoryStoreService.initCategory();
+      categoryStoreService.fetchCategory();
     }),
   ],
 };

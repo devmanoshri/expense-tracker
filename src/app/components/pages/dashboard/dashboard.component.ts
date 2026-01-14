@@ -42,7 +42,7 @@ export class DashboardComponent {
   toDate = '';
 
   ngOnInit(): void {
-    this.categoryStoreServices.initCategory();
+    this.categoryStoreServices.fetchCategory();
     this.categories$ = this.categoryStoreServices.categories$;
 
     this.transactionStoreServices.fetchTransaction();

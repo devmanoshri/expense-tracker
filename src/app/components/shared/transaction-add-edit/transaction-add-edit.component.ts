@@ -65,7 +65,7 @@ export class TransactionAddEditComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.categoryStoreServices.initCategory();
+    this.categoryStoreServices.fetchCategory();
     this.transactionStoreServices.fetchTransaction();
 
     this.transactions$ = this.transactionStoreServices.transactions$;

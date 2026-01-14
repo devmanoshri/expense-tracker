@@ -13,7 +13,7 @@ export class CategoryStoreService {
 
   private readonly categoryServices = inject(CategoriesService);
 
-  initCategory(force = false): void {
+  fetchCategory(force = false): void {
     if (
       (this._categories$.getValue().length && !force) ||
       this._categoryIsLoading$.getValue()
