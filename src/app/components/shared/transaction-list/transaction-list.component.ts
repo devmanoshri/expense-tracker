@@ -1,16 +1,12 @@
-import { CdkScrollable, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule, SlicePipe } from '@angular/common';
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
-  ViewChild,
+  SimpleChanges
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -19,8 +15,7 @@ import {
   Observable,
   of,
   Subscription,
-  take,
-  throttleTime,
+  take
 } from 'rxjs';
 import { Category } from '../../../models/category.model';
 import { Transaction } from '../../../models/transaction.model';
@@ -50,22 +45,16 @@ interface SortBy {
     ReactiveFormsModule,
     ModalComponent,
     TransactionAddEditComponent,
-    ScrollingModule,
     SlicePipe,
   ],
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss'],
 })
-export class TransactionListComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy
-{
+export class TransactionListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() transactions: Transaction[] = [];
   @Input() showSorting = true;
   @Input() mainCategoryList: Category[] = [];
 
-  @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable;
-
-  private readonly changeDetection = inject(ChangeDetectorRef);
   private readonly messageService = inject(MessageService);
 
   sortTitle: string = '';
@@ -128,6 +117,7 @@ export class TransactionListComponent
     this.subscription.add(
       this.sortSelect.valueChanges.subscribe((value) => (this.sortBy = value)),
     );
+
     this.subscription.add(
       this.isTransactionError$.subscribe((errorMsg) => {
         if (errorMsg === true) {
@@ -137,26 +127,6 @@ export class TransactionListComponent
           };
         }
       }),
-    );
-  }
-
-  ngAfterViewInit(): void {
-    this.subscription.add(
-      this.scrollable
-        .elementScrolled()
-        .pipe(throttleTime(200))
-        .subscribe(() => {
-          const element = this.scrollable.getElementRef().nativeElement;
-          const atBottom =
-            element.scrollHeight - element.scrollTop <
-            element.clientHeight + 50;
-          setTimeout(() => {
-            if (atBottom && this.hasMore) {
-              this.showMore();
-              this.changeDetection.markForCheck();
-            }
-          });
-        }),
     );
   }
 

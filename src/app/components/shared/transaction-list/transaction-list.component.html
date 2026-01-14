@@ -49,7 +49,7 @@
   }
   @let transactionList =
     transactions | sortTransaction: sortBy?.orderBy : sortBy?.sortOrder;
-  <div cdkScrollable class="scroll-container">
+  <div  class="scroll-container">
     <ul class="transaction-list">
       @for (
         transaction of transactionList | slice: 0 : visibleTransactionCount;
