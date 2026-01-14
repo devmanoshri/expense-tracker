@@ -9,6 +9,7 @@ import { SortTransactionPipe } from '../../../pipes/sort-transaction.pipe';
 import { CategoryStoreService } from '../../../services/category-store.service';
 import { TransactionListComponent } from '../../shared/transaction-list/transaction-list.component';
 import { TransactionFilterComponent } from './transaction-filter/transaction-filter.component';
+import { CategoryListComponent } from "./category-list/category-list.component";
 
 @Component({
   selector: 'app-manage-transaction',
@@ -18,7 +19,8 @@ import { TransactionFilterComponent } from './transaction-filter/transaction-fil
     FilterTransactionPipe,
     SortTransactionPipe,
     TransactionFilterComponent,
-  ],
+    CategoryListComponent
+],
   templateUrl: './manage-transaction.component.html',
   styleUrl: './manage-transaction.component.scss',
 })

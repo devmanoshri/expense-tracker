@@ -1,0 +1,93 @@
+@let isLoading = (isLoading$ | async) === true;
+
+<div class="category-list-contaier">
+  <div class="list-header flex-content my-4 d-flex justify-content-between">
+    <h2>Category list</h2>
+    <button class="btn btn-primary" (click)="onAddOrEditClick()">
+      + Add new category
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="d-flex justify-content-center text-primary mb-3">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else {
+    @if (sortedList.length) {
+      <div class="category-lists">
+        <div class="income-category-list">
+          <ul class="category-group">
+            @for (category of sortedList; track $index) {
+              <li
+                class="list-group-item border border-3 rounded py-1 px-3"
+                [ngClass]="{
+                  'border-danger': category.type === 'expense',
+                  'border-primary': category.type === 'income',
+                }"
+                id="{{ category.id }}"
+              >
+                <span>{{ category.name }}</span>
+                <div class="actions">
+                  <button
+                    class="btn btn-primary me-2"
+                    (click)="onAddOrEditClick(category, true)"
+                    title="Edit"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button
+                    class="btn btn-secondary"
+                    (click)="onDeleteClick(category.id!)"
+                    type="button"
+                    title="Delete"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    } @else {
+      <p class="text-danger">No category found!</p>
+    }
+  }
+</div>
+
+@if (showModal) {
+  <app-modal
+    [header]="isEdit ? 'Edit category' : 'Add category'"
+    (modalClose)="onModalClose()"
+  >
+    <app-category-add-edit
+      [mainCategoryList]="mainCategoryList"
+      [category]="selectedCategory"
+      [isEdit]="isEdit"
+      (abort)="onModalClose()"
+    ></app-category-add-edit>
+  </app-modal>
+}
+
+@if (showConfirmationModal) {
+  <app-modal header="Please Confirm" (modalClose)="onDeleteCancel()">
+    <p class="mb-2">Are you sure you want to delete this transaction?</p>
+    <button
+      class="btn btn-primary"
+      (click)="onDeleteConfirmation()"
+      [disabled]="isCategoryDeleting"
+    >
+      Yes
+    </button>
+    <button
+      class="btn btn-secondary ms-2"
+      (click)="onDeleteCancel()"
+      type="button"
+      [disabled]="isCategoryDeleting"
+    >
+      No
+    </button>
+  </app-modal>
+}

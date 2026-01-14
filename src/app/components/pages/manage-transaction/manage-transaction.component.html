@@ -7,6 +7,7 @@
 
 <div class="transaction-wrapper">
   <div class="transaction-details">
+    <app-category-list [mainCategoryList]="categories"></app-category-list>
     <app-transaction-filter
       [categories]="categories"
       (transactionTypeChange)="transactionType = $event ?? ''"

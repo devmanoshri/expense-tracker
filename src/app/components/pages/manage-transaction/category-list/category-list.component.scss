@@ -1,0 +1,20 @@
+.category-list-contaier {
+  background: var(--et-white);
+  padding: 2rem;
+  border-radius: var(--container-border-radius);
+  box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.category-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.list-group-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}

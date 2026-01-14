@@ -1,0 +1,62 @@
+<div class="edit-container">
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label>Transaction type</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="income"
+          formControlName="transactionType"
+          id="radio-income"
+        />
+        <label class="form-check-label" for="radio-income"> Income </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="expense"
+          formControlName="transactionType"
+          id="radio-expense"
+        />
+        <label class="form-check-label" for="radio-expense"> Expense </label>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-control-label" for="name">Category name</label>
+      <input
+        class="form-control"
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Name"
+        aria-label="input name"
+      />
+      @if (
+        categoryForm.get("name")?.touched &&
+        categoryForm.get("name")?.invalid &&
+        isSubmitted
+      ) {
+        <div class="text-danger">
+          @if (categoryForm.get("name")?.errors?.["required"]) {
+            <small>Name is required </small>
+          }
+        </div>
+      }
+
+      @if (categoryForm.get("name")?.errors?.["duplicateName"]) {
+        <small class="text-danger">Category name already exists</small>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSaveLoading">
+      {{ isEdit ? "Update" : "Add" }}
+    </button>
+    <button type="button" class="btn btn-light ms-2" (click)="abort.emit()">
+      Cancel
+    </button>
+  </form>
+</div>

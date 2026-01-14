@@ -22,6 +22,7 @@ export class CategoryStoreService {
     }
 
     this._categoryIsLoading$.next(true);
+    this._categoryHasError$.next(false);
 
     this.categoryServices
       .getCategories()
@@ -52,5 +53,9 @@ export class CategoryStoreService {
 
   get categoryHasError$(): Observable<boolean> {
     return this._categoryHasError$.asObservable();
+  }
+
+  get categoryHasLoading$():Observable<boolean>{
+    return this._categoryIsLoading$.asObservable();
   }
 }
