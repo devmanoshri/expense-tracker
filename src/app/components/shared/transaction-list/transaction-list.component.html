@@ -120,16 +120,16 @@
 
 @if (showConfirmationModal) {
   <app-modal header="Please Confirm" (modalClose)="onDeleteCancel()">
-    <p>Are you sure you want to delete this transaction?</p>
+    <p class="mb-2">Are you sure you want to delete this transaction?</p>
     <button
-      class="primary"
+      class="btn btn-primary"
       (click)="onDeleteConfirmation()"
       [disabled]="isTransactionDeleting"
     >
       Yes
     </button>
     <button
-      class="secondary"
+      class="btn btn-secondary ms-2"
       (click)="onDeleteCancel()"
       type="button"
       [disabled]="isTransactionDeleting"
